@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "cat", schema = "pet_schema")
-public class Cat extends Pet{
+@Table(name = "cat")
+public class Cat extends Pet {
     @Id
     @Column(name = "id")
     private long id;

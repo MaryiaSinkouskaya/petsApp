@@ -2,45 +2,47 @@ package com.leverx.app.controller;
 
 import com.leverx.app.entity.Cat;
 import com.leverx.app.service.CatService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/cat")
+@RequestMapping("/api/cats")
 public class CatController {
     private final CatService catService;
 
-    public CatController(CatService catService) {
-        this.catService = catService;
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = GET)
     public Optional<Cat> getCatById(@PathVariable(name = "id") long id) {
         return catService.find(id);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(method = GET)
     public List<Cat> getAllCats() {
         return catService.findAll();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(method = POST)
     public Cat createCat(@RequestBody Cat cat) {
         return catService.create(cat);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.DELETE)
-    public void deleteCat(@RequestBody Cat cat){
-        catService.delete(cat);
+    @RequestMapping(value = "/{id}", method = DELETE)
+    public void deleteCat(@PathVariable(name = "id") long id) {
+        catService.delete(id);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(method = PUT)
     public Cat updateCat(@RequestBody Cat cat) {
         return catService.update(cat);
     }
