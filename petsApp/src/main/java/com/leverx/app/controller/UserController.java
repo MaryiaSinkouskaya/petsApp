@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
@@ -33,6 +34,11 @@ public class UserController {
     @RequestMapping(method = PUT)
     public User updateUser(@RequestBody User user) {
         return userService.update(user);
+    }
+
+    @RequestMapping(value = "/{id}", method = DELETE)
+    public void deleteUser(@PathVariable(name = "id") long id) {
+        userService.delete(id);
     }
 
 }
