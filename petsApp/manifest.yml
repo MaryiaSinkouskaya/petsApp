@@ -1,0 +1,8 @@
+applications:
+  #Application
+- name: petsApp
+  instances: 1
+  memory: 1G
+  disk_quota: 1G
+  path: target/petsApp-1.0-SNAPSHOT.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.17.1
