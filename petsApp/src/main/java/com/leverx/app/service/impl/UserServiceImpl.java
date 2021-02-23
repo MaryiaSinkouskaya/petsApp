@@ -1,6 +1,8 @@
 package com.leverx.app.service.impl;
 
+import com.leverx.app.entity.pet.Pet;
 import com.leverx.app.entity.user.User;
+import com.leverx.app.repository.PetRepository;
 import com.leverx.app.repository.UserRepository;
 import com.leverx.app.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +12,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,6 +24,7 @@ import java.util.Set;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PetRepository petRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -38,8 +43,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findByName(name);
     }
 
+    @Transactional
     @Override
     public void delete(long id) {
+        List<Pet> pets = petRepository.findAllByUserId(id);
+        pets.forEach(pet -> pet.setUser(null));
+        petRepository.saveAll(pets);
         userRepository.deleteById(id);
     }
 
