@@ -1,6 +1,7 @@
-package com.leverx.app.entity;
+package com.leverx.app.entity.dog;
 
-import com.leverx.app.entity.enums.PawColour;
+import com.leverx.app.entity.dog.enums.PawColour;
+import com.leverx.app.entity.pet.Pet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

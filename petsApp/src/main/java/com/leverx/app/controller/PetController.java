@@ -1,6 +1,6 @@
 package com.leverx.app.controller;
 
-import com.leverx.app.entity.Pet;
+import com.leverx.app.entity.pet.Pet;
 import com.leverx.app.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;

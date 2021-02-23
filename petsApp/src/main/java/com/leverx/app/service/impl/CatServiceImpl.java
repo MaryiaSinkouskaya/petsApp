@@ -1,6 +1,6 @@
 package com.leverx.app.service.impl;
 
-import com.leverx.app.entity.Cat;
+import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.repository.CatRepository;
 import com.leverx.app.service.CatService;
 import lombok.RequiredArgsConstructor;

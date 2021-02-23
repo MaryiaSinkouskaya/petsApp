@@ -1,5 +1,6 @@
-package com.leverx.app.entity;
+package com.leverx.app.entity.cat;
 
+import com.leverx.app.entity.pet.Pet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

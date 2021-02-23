@@ -1,6 +1,6 @@
 package com.leverx.app.service.impl;
 
-import com.leverx.app.entity.Dog;
+import com.leverx.app.entity.dog.Dog;
 import com.leverx.app.repository.DogRepository;
 import com.leverx.app.service.DogService;
 import lombok.RequiredArgsConstructor;

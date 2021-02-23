@@ -1,11 +1,13 @@
-package com.leverx.app.entity;
+package com.leverx.app.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.leverx.app.entity.pet.Pet;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +28,10 @@ public class User {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "user")
+    @Column(name = "password")
+    private String password;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonManagedReference(value = "user-pet")
     private List<Pet> pets;
 
