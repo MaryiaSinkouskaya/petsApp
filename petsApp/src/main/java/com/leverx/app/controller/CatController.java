@@ -1,6 +1,6 @@
 package com.leverx.app.controller;
 
-import com.leverx.app.entity.Cat;
+import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.service.CatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 @RestController
 @RequestMapping("/api/cats")
 public class CatController {
+
     private final CatService catService;
 
     @RequestMapping(value = "/{id}", method = GET)
@@ -46,5 +47,4 @@ public class CatController {
     public Cat updateCat(@RequestBody Cat cat) {
         return catService.update(cat);
     }
-
 }

@@ -1,6 +1,7 @@
-package com.leverx.app.entity;
+package com.leverx.app.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.leverx.app.entity.pet.Pet;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Setter
 @Table(name = "user")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -25,6 +27,9 @@ public class User {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "password")
+    private String password;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference(value = "user-pet")

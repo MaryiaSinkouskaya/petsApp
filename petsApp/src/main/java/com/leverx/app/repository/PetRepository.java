@@ -1,6 +1,6 @@
 package com.leverx.app.repository;
 
-import com.leverx.app.entity.Pet;
+import com.leverx.app.entity.pet.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

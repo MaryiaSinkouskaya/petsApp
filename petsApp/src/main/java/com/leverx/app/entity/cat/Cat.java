@@ -1,6 +1,6 @@
-package com.leverx.app.entity;
+package com.leverx.app.entity.cat;
 
-import com.leverx.app.entity.enums.PawColour;
+import com.leverx.app.entity.pet.Pet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,13 +16,13 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "dog")
-public class Dog extends Pet {
+@Table(name = "cat")
+public class Cat extends Pet {
+
     @Id
     @Column(name = "id")
     private long id;
 
-    @Column(name = "paw_colour")
-    @Enumerated(EnumType.STRING)
-    private PawColour pawColour;
+    @Column(name = "claws")
+    private boolean clippedClaws;
 }

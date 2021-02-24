@@ -1,6 +1,6 @@
 package com.leverx.app.controller;
 
-import com.leverx.app.entity.User;
+import com.leverx.app.entity.user.User;
 import com.leverx.app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
     private final UserService userService;
 
     @RequestMapping(value = "/{id}", method = GET)
@@ -40,5 +41,4 @@ public class UserController {
     public void deleteUser(@PathVariable(name = "id") long id) {
         userService.delete(id);
     }
-
 }

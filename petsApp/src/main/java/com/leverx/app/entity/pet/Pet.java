@@ -1,6 +1,7 @@
-package com.leverx.app.entity;
+package com.leverx.app.entity.pet;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.leverx.app.entity.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "pet")
 public abstract class Pet {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

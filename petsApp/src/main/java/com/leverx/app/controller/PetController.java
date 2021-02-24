@@ -1,6 +1,6 @@
 package com.leverx.app.controller;
 
-import com.leverx.app.entity.Pet;
+import com.leverx.app.entity.pet.Pet;
 import com.leverx.app.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 @RequestMapping("/api/pets")
 public class PetController {
+
     private final PetService petService;
 
     @RequestMapping(value = "/{id}", method = GET)
@@ -32,5 +33,4 @@ public class PetController {
     public List<Pet> getAllUserPets(@PathVariable(name = "id") long id) {
         return petService.findAllByUserId(id);
     }
-
 }
