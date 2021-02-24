@@ -19,6 +19,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
     private final UserService userService;
 
     @RequestMapping(value = "/{id}", method = GET)
@@ -40,5 +41,4 @@ public class UserController {
     public void deleteUser(@PathVariable(name = "id") long id) {
         userService.delete(id);
     }
-
 }

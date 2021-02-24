@@ -12,6 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class CatServiceImpl implements CatService {
+
     private final CatRepository catRepository;
 
     @Override

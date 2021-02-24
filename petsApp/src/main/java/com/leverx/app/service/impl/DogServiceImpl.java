@@ -12,6 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class DogServiceImpl implements DogService {
+
     private final DogRepository dogRepository;
 
     @Override

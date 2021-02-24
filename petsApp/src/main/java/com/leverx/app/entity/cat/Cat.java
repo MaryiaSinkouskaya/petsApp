@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "cat")
 public class Cat extends Pet {
+
     @Id
     @Column(name = "id")
     private long id;

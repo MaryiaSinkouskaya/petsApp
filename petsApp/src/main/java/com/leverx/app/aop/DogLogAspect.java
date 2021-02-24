@@ -11,10 +11,11 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 @Log4j2
-public class GogLogAspect {
+public class DogLogAspect {
 
     @Pointcut("execution(public * com.leverx.app.service.impl.DogServiceImpl.*(..))")
-            public void dogServiceExec() { }
+    public void dogServiceExec() {
+    }
 
     @AfterReturning("dogServiceExec()")
     public void success(JoinPoint jp) {

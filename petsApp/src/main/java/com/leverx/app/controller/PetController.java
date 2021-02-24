@@ -16,6 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 @RequestMapping("/api/pets")
 public class PetController {
+
     private final PetService petService;
 
     @RequestMapping(value = "/{id}", method = GET)
@@ -32,5 +33,4 @@ public class PetController {
     public List<Pet> getAllUserPets(@PathVariable(name = "id") long id) {
         return petService.findAllByUserId(id);
     }
-
 }

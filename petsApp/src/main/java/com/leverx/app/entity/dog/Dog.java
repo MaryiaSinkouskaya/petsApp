@@ -21,6 +21,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Table(name = "dog")
 public class Dog extends Pet {
+
     @Id
     @Column(name = "id")
     private long id;

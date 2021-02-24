@@ -7,6 +7,7 @@ import java.util.Optional;
 
 @Service
 public interface UserService {
+
     Optional<User> find(long id);
 
     Optional<User> findByName(String name);
@@ -16,5 +17,4 @@ public interface UserService {
     User update(User user);
 
     void delete(long id);
-
 }

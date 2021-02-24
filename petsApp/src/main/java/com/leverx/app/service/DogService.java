@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @Service
 public interface DogService {
+
     Optional<Dog> find(long id);
 
     List<Dog> findAll();

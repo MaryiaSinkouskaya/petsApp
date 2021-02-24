@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Log4j2
 public class UserLogAspect {
+
     @Pointcut("execution(public * com.leverx.app.service.impl.UserServiceImpl.*(..))")
-    public void userServiceExec() { }
+    public void userServiceExec() {
+    }
 
     @AfterReturning("userServiceExec()")
     public void success(JoinPoint jp) {
@@ -24,5 +26,4 @@ public class UserLogAspect {
     public void exception(JoinPoint jp) {
         log.error("exception occurred at " + jp.toString());
     }
-
 }

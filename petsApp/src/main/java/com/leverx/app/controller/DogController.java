@@ -20,6 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 @RestController
 @RequestMapping("/api/dogs")
 public class DogController {
+
     private final DogService dogService;
 
     @RequestMapping(value = "/{id}", method = GET)
@@ -46,5 +47,4 @@ public class DogController {
     public Dog updateDog(@RequestBody Dog dog) {
         return dogService.update(dog);
     }
-
 }

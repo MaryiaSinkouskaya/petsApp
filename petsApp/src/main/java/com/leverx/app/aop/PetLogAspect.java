@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Log4j2
 public class PetLogAspect {
+
     @Pointcut("execution(public * com.leverx.app.service.impl.PetServiceImpl.*(..))")
-    public void petServiceExec() { }
+    public void petServiceExec() {
+    }
 
     @AfterReturning("petServiceExec()")
     public void success(JoinPoint jp) {
@@ -24,5 +26,4 @@ public class PetLogAspect {
     public void exception(JoinPoint jp) {
         log.error("exception occurred at " + jp.toString());
     }
-
 }
