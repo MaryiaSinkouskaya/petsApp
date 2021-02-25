@@ -9,7 +9,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +17,8 @@ import java.util.List;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.ResponseEntity.status;
+import static org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 @RequiredArgsConstructor
 @Component
@@ -34,10 +35,10 @@ public class PetRepository {
             RestTemplate restTemplate = new RestTemplate();
             return restTemplate.exchange(backendUrl + petUrl,
                     GET, entityWithHeaders(authProvider.getAuth()), List.class);
-        } catch (HttpClientErrorException.Unauthorized e) {
-            return ResponseEntity.status(UNAUTHORIZED).build();
+        } catch (Unauthorized e) {
+            return status(UNAUTHORIZED).build();
         } catch (HttpStatusCodeException e) {
-            return ResponseEntity.status(NO_CONTENT).build();
+            return status(NO_CONTENT).build();
         }
     }
 

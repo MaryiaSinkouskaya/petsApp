@@ -16,6 +16,7 @@ import java.util.List;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.ResponseEntity.status;
 import static org.springframework.web.client.HttpClientErrorException.Unauthorized;
 
 @RequiredArgsConstructor
@@ -34,9 +35,9 @@ public class CatRepository {
             return restTemplate.exchange(backendUrl + catUrl,
                     GET, entityWithHeaders(authProvider.getAuth()), List.class);
         } catch (Unauthorized e) {
-            return ResponseEntity.status(UNAUTHORIZED).build();
+            return status(UNAUTHORIZED).build();
         } catch (HttpStatusCodeException e) {
-            return ResponseEntity.status(NO_CONTENT).build();
+            return status(NO_CONTENT).build();
         }
     }
 
