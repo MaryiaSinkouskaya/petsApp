@@ -7,6 +7,6 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    ResponseEntity<List> findAll(String auth);
+    ResponseEntity<List> findAll();
 
 }

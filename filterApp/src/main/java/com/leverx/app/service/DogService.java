@@ -8,6 +8,6 @@ import java.util.List;
 @Service
 public interface DogService {
 
-    ResponseEntity<List> findAll(String auth);
+    ResponseEntity<List> findAll();
 
 }

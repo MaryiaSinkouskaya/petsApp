@@ -6,5 +6,5 @@ import java.util.List;
 
 @Service
 public interface CommonService {
-    List findAll(String auth);
+    List findAll();
 }

@@ -9,6 +9,6 @@ import java.util.List;
 public interface CatService {
 
 
-    ResponseEntity<List> findAll(String auth);
+    ResponseEntity<List> findAll();
 
 }

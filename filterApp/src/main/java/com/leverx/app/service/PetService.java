@@ -8,5 +8,5 @@ import java.util.List;
 @Service
 public interface PetService {
 
-    ResponseEntity<List> findAll(String auth);
+    ResponseEntity<List> findAll();
 }

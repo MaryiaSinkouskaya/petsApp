@@ -21,11 +21,11 @@ public class CommonServiceImpl implements CommonService {
 
 
     @Override
-    public List findAll(String auth) {
+    public List findAll() {
         return asList(
-                catService.findAll(auth).getBody(),
-                dogService.findAll(auth).getBody(),
-                userService.findAll(auth).getBody()
+                catService.findAll().getBody(),
+                dogService.findAll().getBody(),
+                userService.findAll().getBody()
         );
     }
 }
