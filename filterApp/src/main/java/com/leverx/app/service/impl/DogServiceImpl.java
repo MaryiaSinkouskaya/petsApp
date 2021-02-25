@@ -1,9 +1,9 @@
 package com.leverx.app.service.impl;
 
+import com.leverx.app.entity.dog.Dog;
 import com.leverx.app.repository.DogRepository;
 import com.leverx.app.service.DogService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class DogServiceImpl implements DogService {
     private final DogRepository dogRepository;
 
     @Override
-    public ResponseEntity<List> findAll() {
+    public List<Dog> findAll() {
         return dogRepository.findAll();
     }
 

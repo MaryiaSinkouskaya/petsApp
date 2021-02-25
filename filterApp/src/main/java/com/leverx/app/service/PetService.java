@@ -1,6 +1,6 @@
 package com.leverx.app.service;
 
-import org.springframework.http.ResponseEntity;
+import com.leverx.app.entity.pet.Pet;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,5 +8,5 @@ import java.util.List;
 @Service
 public interface PetService {
 
-    ResponseEntity<List> findAll();
+    List<Pet> findAll();
 }

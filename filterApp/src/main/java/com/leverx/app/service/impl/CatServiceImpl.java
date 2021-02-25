@@ -1,9 +1,9 @@
 package com.leverx.app.service.impl;
 
+import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.repository.CatRepository;
 import com.leverx.app.service.CatService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class CatServiceImpl implements CatService {
     private final CatRepository catRepository;
 
     @Override
-    public ResponseEntity<List> findAll() {
+    public List<Cat> findAll() {
         return catRepository.findAll();
     }
 }

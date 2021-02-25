@@ -1,6 +1,6 @@
 package com.leverx.app.service;
 
-import org.springframework.http.ResponseEntity;
+import com.leverx.app.entity.dog.Dog;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,6 +8,6 @@ import java.util.List;
 @Service
 public interface DogService {
 
-    ResponseEntity<List> findAll();
+    List<Dog> findAll();
 
 }

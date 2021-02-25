@@ -1,6 +1,6 @@
 package com.leverx.app.service;
 
-import org.springframework.http.ResponseEntity;
+import com.leverx.app.entity.cat.Cat;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,6 +9,6 @@ import java.util.List;
 public interface CatService {
 
 
-    ResponseEntity<List> findAll();
+    List<Cat> findAll();
 
 }

@@ -3,6 +3,7 @@ package com.leverx.app.controller;
 import com.leverx.app.provider.AuthProvider;
 import com.leverx.app.service.CommonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ public class CommonController {
 
     @RequestScope
     @RequestMapping(method = GET)
-    public List getAll(@RequestHeader("Authorization") String auth) {
+    public ResponseEntity<List<Object>> getAll(@RequestHeader("Authorization") String auth) {
         authProvider.setAuth(auth);
         return commonService.findAll();
     }

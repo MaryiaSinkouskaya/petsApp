@@ -1,12 +1,12 @@
 package com.leverx.app.service;
 
-import org.springframework.http.ResponseEntity;
+import com.leverx.app.entity.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface UserService {
-    ResponseEntity<List> findAll();
+    List<User> findAll();
 
 }
