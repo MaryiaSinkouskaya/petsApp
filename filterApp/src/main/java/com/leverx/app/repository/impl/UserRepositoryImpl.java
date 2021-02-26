@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -38,7 +37,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         ResponseEntity<User[]> responseEntity = restTemplate
                 .exchange(backendUrl + userUrl, GET, new HttpEntity<>(headers), User[].class);
-            return asList(requireNonNull(responseEntity.getBody()));
+        return asList(requireNonNull(responseEntity.getBody()));
     }
 
     @Override

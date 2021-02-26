@@ -2,9 +2,6 @@ package com.leverx.app.controller;
 
 import com.leverx.app.entity.DTO.ResponseDTO;
 import com.leverx.app.entity.DTO.ResponseListDTO;
-import com.leverx.app.entity.cat.Cat;
-import com.leverx.app.entity.dog.Dog;
-import com.leverx.app.entity.user.User;
 import com.leverx.app.provider.AuthProvider;
 import com.leverx.app.service.CommonService;
 import lombok.RequiredArgsConstructor;

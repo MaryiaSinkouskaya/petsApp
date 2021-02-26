@@ -15,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.HttpMethod.GET;
 
@@ -37,7 +36,7 @@ public class PetRepositoryImpl implements PetRepository {
 
         ResponseEntity<Pet[]> responseEntity = restTemplate
                 .exchange(backendUrl + petUrl, GET, new HttpEntity<>(headers), Pet[].class);
-            return asList(requireNonNull(responseEntity.getBody()));
+        return asList(requireNonNull(responseEntity.getBody()));
     }
 
 }
