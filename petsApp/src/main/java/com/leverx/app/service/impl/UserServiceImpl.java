@@ -21,12 +21,14 @@ public class UserServiceImpl implements UserService {
     private final PetRepository petRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Transactional
     @Override
     public User create(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public Optional<User> find(long id) {
         return userRepository.findById(id);

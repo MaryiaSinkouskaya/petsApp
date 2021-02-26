@@ -10,4 +10,5 @@ public interface DogService {
 
     List<Dog> findAll();
 
+    Dog create(Dog dog);
 }

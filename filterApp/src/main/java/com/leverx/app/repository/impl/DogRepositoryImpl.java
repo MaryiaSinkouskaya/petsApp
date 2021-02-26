@@ -9,7 +9,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -18,6 +17,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 @RequiredArgsConstructor
 @Component
@@ -30,20 +30,24 @@ public class DogRepositoryImpl implements DogRepository {
     private final AuthProvider authProvider;
 
     public List<Dog> findAll() {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Dog[]> responseEntity = restTemplate
-                    .exchange(backendUrl + dogUrl, GET, entityWithHeaders(), Dog[].class);
-            return asList(requireNonNull(responseEntity.getBody()));
-        } catch (HttpStatusCodeException e) {
-            return emptyList();
-        }
-    }
-
-    private HttpEntity<Dog> entityWithHeaders() {
+        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         String auth = authProvider.getAuth();
         headers.set("Authorization", auth);
-        return new HttpEntity<>(headers);
+
+        ResponseEntity<Dog[]> responseEntity = restTemplate
+                .exchange(backendUrl + dogUrl, GET, new HttpEntity<>(headers), Dog[].class);
+            return asList(requireNonNull(responseEntity.getBody()));
+    }
+
+    @Override
+    public Dog create(Dog dog) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        String auth = authProvider.getAuth();
+        headers.set("Authorization", auth);
+        return restTemplate
+                .exchange(backendUrl + dogUrl, POST, new HttpEntity<>(dog, headers), Dog.class)
+                .getBody();
     }
 }

@@ -14,8 +14,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 @RequiredArgsConstructor
 @Component
@@ -29,15 +31,22 @@ public class CatRepositoryImpl implements CatRepository {
 
     public List<Cat> findAll() {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Cat[]> responseEntity = restTemplate
-                .exchange(backendUrl + catUrl, GET, entityWithHeaders(), Cat[].class);
-        return asList(requireNonNull(responseEntity.getBody()));
-    }
-
-    private HttpEntity<Cat> entityWithHeaders() {
         HttpHeaders headers = new HttpHeaders();
         String auth = authProvider.getAuth();
         headers.set("Authorization", auth);
-        return new HttpEntity<>(headers);
+        ResponseEntity<Cat[]> responseEntity = restTemplate
+                .exchange(backendUrl + catUrl, GET, new HttpEntity<>(headers), Cat[].class);
+            return asList(requireNonNull(responseEntity.getBody()));
+    }
+
+    @Override
+    public Cat create(Cat cat) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        String auth = authProvider.getAuth();
+        headers.set("Authorization", auth);
+         return restTemplate
+                .exchange(backendUrl + catUrl, POST, new HttpEntity<>(cat, headers), Cat.class)
+                 .getBody();
     }
 }

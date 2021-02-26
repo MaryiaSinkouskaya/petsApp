@@ -7,11 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
-public class ResponseDTO {
-    private Dog dog;
-    private Cat cat;
-    private User user;
+public class ResponseListDTO {
+    private List<Dog> dogs;
+    private List<Cat> cats;
+    private List<User> users;
 }

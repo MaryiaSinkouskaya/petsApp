@@ -10,7 +10,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -31,20 +30,14 @@ public class PetRepositoryImpl implements PetRepository {
     private final AuthProvider authProvider;
 
     public List<Pet> findAll() {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Pet[]> responseEntity = restTemplate
-                    .exchange(backendUrl + petUrl, GET, entityWithHeaders(), Pet[].class);
-            return asList(requireNonNull(responseEntity.getBody()));
-        } catch (HttpStatusCodeException e) {
-            return emptyList();
-        }
-    }
-
-    private HttpEntity<Pet> entityWithHeaders() {
+        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         String auth = authProvider.getAuth();
         headers.set("Authorization", auth);
-        return new HttpEntity<>(headers);
+
+        ResponseEntity<Pet[]> responseEntity = restTemplate
+                .exchange(backendUrl + petUrl, GET, new HttpEntity<>(headers), Pet[].class);
+            return asList(requireNonNull(responseEntity.getBody()));
     }
+
 }

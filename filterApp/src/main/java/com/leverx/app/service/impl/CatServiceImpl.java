@@ -15,6 +15,11 @@ public class CatServiceImpl implements CatService {
     private final CatRepository catRepository;
 
     @Override
+    public Cat create(Cat cat) {
+        return catRepository.create(cat);
+    }
+
+    @Override
     public List<Cat> findAll() {
         return catRepository.findAll();
     }

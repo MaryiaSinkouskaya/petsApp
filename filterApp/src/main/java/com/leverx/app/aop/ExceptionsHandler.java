@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.ResponseEntity.status;
 import static org.springframework.web.client.HttpClientErrorException.NotFound;
@@ -30,6 +31,16 @@ public class ExceptionsHandler {
     @ExceptionHandler(InternalServerError.class)
     public ResponseEntity<Object> internalException() {
         return status(INTERNAL_SERVER_ERROR).build();
+    }
+
+    @ExceptionHandler(InternalError.class)
+    public ResponseEntity<Object> internalErr() {
+        return status(INTERNAL_SERVER_ERROR).build();
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<Object> nullPointer() {
+        return status(NO_CONTENT).build();
     }
 
 }

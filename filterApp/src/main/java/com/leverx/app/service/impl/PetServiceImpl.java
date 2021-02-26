@@ -12,6 +12,11 @@ import java.util.List;
 @Service
 public class PetServiceImpl implements PetService {
 
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
     private final PetRepository petRepository;
 
     @Override

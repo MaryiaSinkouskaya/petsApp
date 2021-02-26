@@ -11,4 +11,5 @@ public interface CatService {
 
     List<Cat> findAll();
 
+    Cat create(Cat cat);
 }

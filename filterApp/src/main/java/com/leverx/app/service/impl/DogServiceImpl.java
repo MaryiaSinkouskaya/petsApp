@@ -15,6 +15,11 @@ public class DogServiceImpl implements DogService {
     private final DogRepository dogRepository;
 
     @Override
+    public Dog create(Dog dog) {
+        return dogRepository.create(dog);
+    }
+
+    @Override
     public List<Dog> findAll() {
         return dogRepository.findAll();
     }
