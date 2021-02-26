@@ -24,9 +24,9 @@ import static org.springframework.http.HttpMethod.GET;
 public class UserRepositoryImpl implements UserRepository {
 
     @Value(value = "${backend.server.url}")
-    private String backendUrl;
+    private final String backendUrl;
     @Value(value = "${user.url}")
-    private String userUrl;
+    private final String userUrl;
     private final AuthProvider authProvider;
 
     public List<User> findAll() {

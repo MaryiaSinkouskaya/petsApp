@@ -25,9 +25,9 @@ import static org.springframework.http.HttpMethod.GET;
 public class PetRepositoryImpl implements PetRepository {
 
     @Value(value = "${backend.server.url}")
-    private String backendUrl;
+    private final String backendUrl;
     @Value(value = "${pet.url}")
-    private String petUrl;
+    private final String petUrl;
     private final AuthProvider authProvider;
 
     public List<Pet> findAll() {

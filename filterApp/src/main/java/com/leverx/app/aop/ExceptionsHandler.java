@@ -1,17 +1,17 @@
 package com.leverx.app.aop;
 
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 
-import static org.springframework.http.HttpStatus.*;
-import static org.springframework.http.ResponseEntity.*;
-import static org.springframework.web.client.HttpClientErrorException.*;
-import static org.springframework.web.client.HttpServerErrorException.*;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.ResponseEntity.status;
+import static org.springframework.web.client.HttpClientErrorException.NotFound;
+import static org.springframework.web.client.HttpClientErrorException.Unauthorized;
+import static org.springframework.web.client.HttpServerErrorException.InternalServerError;
 
 
 @ControllerAdvice

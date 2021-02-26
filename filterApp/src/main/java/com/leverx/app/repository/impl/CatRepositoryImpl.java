@@ -22,9 +22,9 @@ import static org.springframework.http.HttpMethod.GET;
 public class CatRepositoryImpl implements CatRepository {
 
     @Value(value = "${backend.server.url}")
-    private String backendUrl;
+    private final String backendUrl;
     @Value(value = "${cat.url}")
-    private String catUrl;
+    private final String catUrl;
     private final AuthProvider authProvider;
 
     public List<Cat> findAll() {

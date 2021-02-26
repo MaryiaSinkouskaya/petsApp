@@ -24,9 +24,9 @@ import static org.springframework.http.HttpMethod.GET;
 public class DogRepositoryImpl implements DogRepository {
 
     @Value(value = "${backend.server.url}")
-    private String backendUrl;
+    private final String backendUrl;
     @Value(value = "${dog.url}")
-    private String dogUrl;
+    private final String dogUrl;
     private final AuthProvider authProvider;
 
     public List<Dog> findAll() {
