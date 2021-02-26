@@ -1,5 +1,6 @@
 package com.leverx.app.controller;
 
+import com.leverx.app.entity.DTO.ResponseDTO;
 import com.leverx.app.provider.AuthProvider;
 import com.leverx.app.service.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class CommonController {
 
     @RequestScope
     @RequestMapping(method = GET)
-    public ResponseEntity<List<Object>> getAll(@RequestHeader("Authorization") String auth) {
+    public ResponseDTO getAll(@RequestHeader("Authorization") String auth) {
         authProvider.setAuth(auth);
         return commonService.findAll();
     }
