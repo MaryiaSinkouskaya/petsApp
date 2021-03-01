@@ -36,16 +36,26 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public ResponseDTO createAll(User user, Cat cat, Dog dog) {
 
-        Optional<User> userOptional = ofNullable(userService.create(user));
-        if (userOptional.isPresent()) {
-            dog.setUser(userOptional.get());
-            cat.setUser(userOptional.get());
-            return new ResponseDTO(
-                    dogService.create(dog),
-                    catService.create(cat),
-                    userOptional.get());
-        }else{
-            return null;
+        Optional<User> responseUser = ofNullable(userService.create(user));
+        if (responseUser.isPresent()) {
+            dog.setUser(responseUser.get());
+            Optional<Dog> responseDog = ofNullable(dogService.create(dog));
+            if (responseDog.isPresent()) {
+                cat.setUser(responseUser.get());
+                Optional<Cat> responseCat = ofNullable(catService.create(cat));
+                if (responseCat.isPresent()) {
+                    return new ResponseDTO(
+                            responseDog.get(),
+                            responseCat.get(),
+                            responseUser.get());
+                } else {
+                    dogService.delete(responseDog.get().getId());
+                    userService.delete(responseUser.get().getId());
+                }
+            } else {
+                userService.delete(responseUser.get().getId());
+            }
         }
+        throw new NullPointerException();
     }
 }

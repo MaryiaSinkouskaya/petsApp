@@ -1,5 +1,6 @@
 package com.leverx.app.repository.impl;
 
+import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.entity.dog.Dog;
 import com.leverx.app.provider.AuthProvider;
 import com.leverx.app.repository.DogRepository;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
+import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -49,4 +51,18 @@ public class DogRepositoryImpl implements DogRepository {
                 .exchange(backendUrl + dogUrl, POST, new HttpEntity<>(dog, headers), Dog.class)
                 .getBody();
     }
+
+    @Override
+    public void delete(long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        String auth = authProvider.getAuth();
+        headers.set("Authorization", auth);
+        restTemplate.exchange(
+                backendUrl + dogUrl + id,
+                DELETE,
+                new HttpEntity<>(headers),
+                Dog.class);
+    }
+
 }

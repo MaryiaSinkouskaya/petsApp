@@ -15,6 +15,11 @@ public class DogServiceImpl implements DogService {
     private final DogRepository dogRepository;
 
     @Override
+    public void delete(long id) {
+        dogRepository.delete(id);
+    }
+
+    @Override
     public Dog create(Dog dog) {
         return dogRepository.create(dog);
     }

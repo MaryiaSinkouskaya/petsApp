@@ -15,6 +15,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Objects.requireNonNull;
+import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -47,5 +48,18 @@ public class CatRepositoryImpl implements CatRepository {
         return restTemplate
                 .exchange(backendUrl + catUrl, POST, new HttpEntity<>(cat, headers), Cat.class)
                 .getBody();
+    }
+
+    @Override
+    public void delete(long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        String auth = authProvider.getAuth();
+        headers.set("Authorization", auth);
+        restTemplate.exchange(
+                backendUrl + catUrl + id,
+                DELETE,
+                new HttpEntity<>(headers),
+                Cat.class);
     }
 }

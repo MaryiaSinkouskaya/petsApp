@@ -8,4 +8,7 @@ public interface DogRepository {
     List<Dog> findAll();
 
     Dog create(Dog dog);
+
+    void delete(long id);
+
 }

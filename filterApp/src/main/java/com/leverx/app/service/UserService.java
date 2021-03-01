@@ -10,4 +10,7 @@ public interface UserService {
     List<User> findAll();
 
     User create(User user);
+
+    void delete(long id);
+
 }

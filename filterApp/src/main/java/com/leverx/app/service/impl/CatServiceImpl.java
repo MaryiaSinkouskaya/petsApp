@@ -23,4 +23,9 @@ public class CatServiceImpl implements CatService {
     public List<Cat> findAll() {
         return catRepository.findAll();
     }
+
+    @Override
+    public void delete(long id) {
+         catRepository.delete(id);
+    }
 }
