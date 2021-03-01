@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static java.lang.Thread.sleep;
 import static java.util.Optional.ofNullable;
 
 @Service
@@ -38,18 +37,15 @@ public class CommonServiceImpl implements CommonService {
     public ResponseDTO createAll(User user, Cat cat, Dog dog) {
 
         Optional<User> userOptional = ofNullable(userService.create(user));
-        while (!userOptional.isPresent()) {
-            try {
-                sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if (userOptional.isPresent()) {
+            dog.setUser(userOptional.get());
+            cat.setUser(userOptional.get());
+            return new ResponseDTO(
+                    dogService.create(dog),
+                    catService.create(cat),
+                    userOptional.get());
+        }else{
+            return null;
         }
-        dog.setUser(userOptional.get());
-        cat.setUser(userOptional.get());
-        return new ResponseDTO(
-                dogService.create(dog),
-                catService.create(cat),
-                userOptional.get());
     }
 }
