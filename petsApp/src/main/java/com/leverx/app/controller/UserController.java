@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
@@ -25,6 +26,11 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = GET)
     public Optional<User> getUserById(@PathVariable(name = "id") long id) {
         return userService.find(id);
+    }
+
+    @RequestMapping(method = GET)
+    public List<User> getAllUsers() {
+        return userService.findAll();
     }
 
     @RequestMapping(method = POST)
