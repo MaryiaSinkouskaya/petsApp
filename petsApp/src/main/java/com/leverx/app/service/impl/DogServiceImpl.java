@@ -16,13 +16,11 @@ public class DogServiceImpl implements DogService {
 
     private final DogRepository dogRepository;
 
-    @Transactional
     @Override
     public Optional<Dog> find(long id) {
         return dogRepository.findById(id);
     }
 
-    @Transactional
     @Override
     public Dog create(Dog dog) {
         return dogRepository.save(dog);

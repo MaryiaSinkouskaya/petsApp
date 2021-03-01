@@ -1,13 +1,11 @@
 package com.leverx.app.repository.impl;
 
-import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.entity.dog.Dog;
-import com.leverx.app.provider.AuthProvider;
+import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.DogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -28,41 +26,35 @@ public class DogRepositoryImpl implements DogRepository {
     private final String backendUrl;
     @Value(value = "${dog.url}")
     private final String dogUrl;
-    private final AuthProvider authProvider;
+    private final AuthHeaderProvider authHeaderProvider;
 
     public List<Dog> findAll() {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
-
-        ResponseEntity<Dog[]> responseEntity = restTemplate
-                .exchange(backendUrl + dogUrl, GET, new HttpEntity<>(headers), Dog[].class);
+        ResponseEntity<Dog[]> responseEntity = restTemplate.exchange(
+                backendUrl + dogUrl,
+                GET,
+                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                Dog[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
 
     @Override
     public Dog create(Dog dog) {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
-        return restTemplate
-                .exchange(backendUrl + dogUrl, POST, new HttpEntity<>(dog, headers), Dog.class)
-                .getBody();
+        return restTemplate.exchange(
+                backendUrl + dogUrl,
+                POST,
+                new HttpEntity<>(dog, authHeaderProvider.getAuthHeader()),
+                Dog.class).getBody();
     }
 
     @Override
     public void delete(long id) {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
         restTemplate.exchange(
                 backendUrl + dogUrl + id,
                 DELETE,
-                new HttpEntity<>(headers),
+                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
                 Dog.class);
     }
-
 }

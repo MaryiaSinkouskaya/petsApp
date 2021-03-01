@@ -1,12 +1,11 @@
 package com.leverx.app.repository.impl;
 
 import com.leverx.app.entity.cat.Cat;
-import com.leverx.app.provider.AuthProvider;
+import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.CatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -27,39 +26,35 @@ public class CatRepositoryImpl implements CatRepository {
     private final String backendUrl;
     @Value(value = "${cat.url}")
     private final String catUrl;
-    private final AuthProvider authProvider;
+    private final AuthHeaderProvider authHeaderProvider;
 
     public List<Cat> findAll() {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
-        ResponseEntity<Cat[]> responseEntity = restTemplate
-                .exchange(backendUrl + catUrl, GET, new HttpEntity<>(headers), Cat[].class);
+        ResponseEntity<Cat[]> responseEntity = restTemplate.exchange(
+                backendUrl + catUrl,
+                GET,
+                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                Cat[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
 
     @Override
     public Cat create(Cat cat) {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
-        return restTemplate
-                .exchange(backendUrl + catUrl, POST, new HttpEntity<>(cat, headers), Cat.class)
-                .getBody();
+        return restTemplate.exchange(
+                backendUrl + catUrl,
+                POST,
+                new HttpEntity<>(cat, authHeaderProvider.getAuthHeader()),
+                Cat.class).getBody();
     }
 
     @Override
     public void delete(long id) {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
         restTemplate.exchange(
                 backendUrl + catUrl + id,
                 DELETE,
-                new HttpEntity<>(headers),
+                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
                 Cat.class);
     }
 }

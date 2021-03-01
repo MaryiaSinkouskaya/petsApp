@@ -16,7 +16,6 @@ public class CatServiceImpl implements CatService {
 
     private final CatRepository catRepository;
 
-    @Transactional
     @Override
     public Optional<Cat> find(long id) {
         return catRepository.findById(id);
@@ -27,7 +26,6 @@ public class CatServiceImpl implements CatService {
         return catRepository.findAll();
     }
 
-    @Transactional
     @Override
     public Cat create(Cat cat) {
         return catRepository.save(cat);

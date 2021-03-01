@@ -1,13 +1,11 @@
 package com.leverx.app.repository.impl;
 
-import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.entity.user.User;
-import com.leverx.app.provider.AuthProvider;
+import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -28,42 +26,35 @@ public class UserRepositoryImpl implements UserRepository {
     private final String backendUrl;
     @Value(value = "${user.url}")
     private final String userUrl;
-    private final AuthProvider authProvider;
-
+    private final AuthHeaderProvider authHeaderProvider;
 
     public List<User> findAll() {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
-
-        ResponseEntity<User[]> responseEntity = restTemplate
-                .exchange(backendUrl + userUrl, GET, new HttpEntity<>(headers), User[].class);
+        ResponseEntity<User[]> responseEntity = restTemplate.exchange(
+                backendUrl + userUrl,
+                GET,
+                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                User[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
 
     @Override
     public User create(User user) {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
-        return restTemplate
-                .exchange(backendUrl + userUrl, POST, new HttpEntity<>(user, headers), User.class)
-                .getBody();
+        return restTemplate.exchange(
+                backendUrl + userUrl,
+                POST,
+                new HttpEntity<>(user, authHeaderProvider.getAuthHeader()),
+                User.class).getBody();
     }
 
     @Override
     public void delete(long id) {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
         restTemplate.exchange(
                 backendUrl + userUrl + id,
                 DELETE,
-                new HttpEntity<>(headers),
+                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
                 User.class);
     }
-
 }

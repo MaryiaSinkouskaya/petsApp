@@ -26,6 +26,6 @@ public class CatServiceImpl implements CatService {
 
     @Override
     public void delete(long id) {
-         catRepository.delete(id);
+        catRepository.delete(id);
     }
 }

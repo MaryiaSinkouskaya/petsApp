@@ -2,12 +2,11 @@ package com.leverx.app.repository.impl;
 
 
 import com.leverx.app.entity.pet.Pet;
-import com.leverx.app.provider.AuthProvider;
+import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -26,17 +25,15 @@ public class PetRepositoryImpl implements PetRepository {
     private final String backendUrl;
     @Value(value = "${pet.url}")
     private final String petUrl;
-    private final AuthProvider authProvider;
+    private final AuthHeaderProvider authHeaderProvider;
 
     public List<Pet> findAll() {
         RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String auth = authProvider.getAuth();
-        headers.set("Authorization", auth);
-
-        ResponseEntity<Pet[]> responseEntity = restTemplate
-                .exchange(backendUrl + petUrl, GET, new HttpEntity<>(headers), Pet[].class);
+        ResponseEntity<Pet[]> responseEntity = restTemplate.exchange(
+                backendUrl + petUrl,
+                GET,
+                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                Pet[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
-
 }
