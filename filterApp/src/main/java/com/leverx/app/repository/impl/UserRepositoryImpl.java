@@ -41,13 +41,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User create(User dog) {
+    public User create(User user) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         String auth = authProvider.getAuth();
         headers.set("Authorization", auth);
         return restTemplate
-                .exchange(backendUrl + userUrl, POST, new HttpEntity<>(dog, headers), User.class)
+                .exchange(backendUrl + userUrl, POST, new HttpEntity<>(user, headers), User.class)
                 .getBody();
     }
 }
