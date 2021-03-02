@@ -29,10 +29,11 @@ public class PetRepositoryImpl implements PetRepository {
 
     public List<Pet> findAll() {
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
         ResponseEntity<Pet[]> responseEntity = restTemplate.exchange(
                 backendUrl + petUrl,
                 GET,
-                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                httpEntity,
                 Pet[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }

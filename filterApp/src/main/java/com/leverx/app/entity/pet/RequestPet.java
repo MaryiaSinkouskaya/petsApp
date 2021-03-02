@@ -1,6 +1,6 @@
-package com.leverx.app.entity.cat;
+package com.leverx.app.entity.pet;
 
-import com.leverx.app.entity.pet.RequestPet;
+import com.leverx.app.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +10,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestCat extends RequestPet {
+public abstract class RequestPet {
 
-    private boolean clippedClaws;
+    private String name;
+
+    private User user;
 
 }

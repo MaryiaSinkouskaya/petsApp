@@ -31,10 +31,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     public List<User> findAll() {
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
         ResponseEntity<User[]> responseEntity = restTemplate.exchange(
                 backendUrl + userUrl,
                 GET,
-                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                httpEntity,
                 User[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
@@ -42,20 +43,22 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User create(RequestUser user) {
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<RequestUser> httpEntity = new HttpEntity<>(user, authHeaderProvider.getAuthHeader());
         return restTemplate.exchange(
                 backendUrl + userUrl,
                 POST,
-                new HttpEntity<>(user, authHeaderProvider.getAuthHeader()),
+                httpEntity,
                 User.class).getBody();
     }
 
     @Override
     public void delete(long id) {
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
         restTemplate.exchange(
                 backendUrl + userUrl + id,
                 DELETE,
-                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                httpEntity,
                 User.class);
     }
 }

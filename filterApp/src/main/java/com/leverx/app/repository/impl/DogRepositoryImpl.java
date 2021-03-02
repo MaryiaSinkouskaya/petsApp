@@ -31,10 +31,11 @@ public class DogRepositoryImpl implements DogRepository {
 
     public List<Dog> findAll() {
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
         ResponseEntity<Dog[]> responseEntity = restTemplate.exchange(
                 backendUrl + dogUrl,
                 GET,
-                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                httpEntity,
                 Dog[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
@@ -42,20 +43,22 @@ public class DogRepositoryImpl implements DogRepository {
     @Override
     public Dog create(RequestDog dog) {
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<RequestDog> httpEntity = new HttpEntity<>(dog, authHeaderProvider.getAuthHeader());
         return restTemplate.exchange(
                 backendUrl + dogUrl,
                 POST,
-                new HttpEntity<>(dog, authHeaderProvider.getAuthHeader()),
+                httpEntity,
                 Dog.class).getBody();
     }
 
     @Override
     public void delete(long id) {
         RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
         restTemplate.exchange(
                 backendUrl + dogUrl + id,
                 DELETE,
-                new HttpEntity<>(authHeaderProvider.getAuthHeader()),
+                httpEntity,
                 Dog.class);
     }
 }
