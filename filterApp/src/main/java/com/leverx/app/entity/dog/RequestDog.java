@@ -1,7 +1,7 @@
-package com.leverx.app.entity.user;
+package com.leverx.app.entity.dog;
 
+import com.leverx.app.entity.dog.enums.PawColour;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +10,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class User {
+public class RequestDog {
 
-    private long id;
+    private PawColour pawColour;
 
-    private String name;
-
-    private String password;
 }

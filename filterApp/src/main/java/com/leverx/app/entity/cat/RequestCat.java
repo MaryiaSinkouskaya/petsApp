@@ -1,7 +1,6 @@
-package com.leverx.app.entity.user;
+package com.leverx.app.entity.cat;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,12 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class User {
+public class RequestCat {
 
-    private long id;
+    private boolean clippedClaws;
 
-    private String name;
-
-    private String password;
 }

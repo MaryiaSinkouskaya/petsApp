@@ -1,6 +1,7 @@
 package com.leverx.app.repository.impl;
 
 import com.leverx.app.entity.cat.Cat;
+import com.leverx.app.entity.cat.RequestCat;
 import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.CatRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,11 +9,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.*;
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
@@ -31,7 +38,7 @@ public class CatRepositoryImpl implements CatRepository {
     public List<Cat> findAll() {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Cat[]> responseEntity = restTemplate.exchange(
-                backendUrl + catUrl,
+                backendUrl + catUrl ,
                 GET,
                 new HttpEntity<>(authHeaderProvider.getAuthHeader()),
                 Cat[].class);
@@ -39,7 +46,7 @@ public class CatRepositoryImpl implements CatRepository {
     }
 
     @Override
-    public Cat create(Cat cat) {
+    public Cat create(RequestCat cat) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.exchange(
                 backendUrl + catUrl,

@@ -1,5 +1,6 @@
 package com.leverx.app.service.impl;
 
+import com.leverx.app.entity.user.RequestUser;
 import com.leverx.app.entity.user.User;
 import com.leverx.app.repository.UserRepository;
 import com.leverx.app.service.UserService;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(User user) {
+    public User create(RequestUser user) {
         return userRepository.create(user);
     }
 

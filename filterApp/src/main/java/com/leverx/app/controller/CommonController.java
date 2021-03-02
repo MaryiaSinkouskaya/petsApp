@@ -1,5 +1,6 @@
 package com.leverx.app.controller;
 
+import com.leverx.app.entity.DTO.RequestDTO;
 import com.leverx.app.entity.DTO.ResponseDTO;
 import com.leverx.app.entity.DTO.ResponseListDTO;
 import com.leverx.app.provider.AuthProvider;
@@ -32,12 +33,12 @@ public class CommonController {
     @RequestScope
     @RequestMapping(method = POST)
     public ResponseDTO setAll(@RequestHeader("Authorization") String auth,
-                              @RequestBody ResponseDTO responseDTO) {
+                              @RequestBody RequestDTO requestDTO) {
         authProvider.setAuth(auth);
         return commonService.createAll(
-                responseDTO.getUser(),
-                responseDTO.getCat(),
-                responseDTO.getDog());
+                requestDTO.getUser(),
+                requestDTO.getCat(),
+                requestDTO.getDog());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.leverx.app.service;
 
+import com.leverx.app.entity.user.RequestUser;
 import com.leverx.app.entity.user.User;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
 
-    User create(User user);
+    User create(RequestUser user);
 
     void delete(long id);
 

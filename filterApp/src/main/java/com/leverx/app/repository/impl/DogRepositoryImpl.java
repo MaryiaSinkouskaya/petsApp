@@ -1,6 +1,7 @@
 package com.leverx.app.repository.impl;
 
 import com.leverx.app.entity.dog.Dog;
+import com.leverx.app.entity.dog.RequestDog;
 import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.DogRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class DogRepositoryImpl implements DogRepository {
     }
 
     @Override
-    public Dog create(Dog dog) {
+    public Dog create(RequestDog dog) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.exchange(
                 backendUrl + dogUrl,

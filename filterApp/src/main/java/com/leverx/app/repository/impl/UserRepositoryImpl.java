@@ -1,5 +1,6 @@
 package com.leverx.app.repository.impl;
 
+import com.leverx.app.entity.user.RequestUser;
 import com.leverx.app.entity.user.User;
 import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.UserRepository;
@@ -39,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User create(User user) {
+    public User create(RequestUser user) {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.exchange(
                 backendUrl + userUrl,
