@@ -13,7 +13,6 @@ import static org.springframework.web.context.request.RequestAttributes.SCOPE_RE
 import static org.springframework.web.context.request.RequestContextHolder.currentRequestAttributes;
 
 @Data
-@AllArgsConstructor
 @Builder
 public class CatTransactionImpl implements CatTransaction {
 

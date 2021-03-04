@@ -12,8 +12,6 @@ import com.leverx.app.service.CommonService;
 import com.leverx.app.service.DogService;
 import com.leverx.app.service.UserService;
 import com.leverx.app.transactional.Transaction;
-import com.leverx.app.transactional.builder.TransactionalBuilder;
-import com.leverx.app.transactional.impl.UserTransactionImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -24,6 +22,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.leverx.app.transactional.builder.TransactionalBuilder.*;
 import static java.util.Arrays.asList;
 
 @Service
@@ -46,7 +45,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public ResponseDTO createAll(RequestDTO requestDTO) {
         ResponseUser user = createUser(requestDTO);
-        List<Transaction> transactions = getPetsTransactional(getPetsWithSettedUser(user, requestDTO));
+        List<Transaction> transactions = getTransactions(attachUser(user, requestDTO));
         List<Transaction> successfulTransactions = new LinkedList<>();
         List<ResponseEntity> responseEntities = new ArrayList<>();
         responseEntities.add(user);
@@ -78,22 +77,19 @@ public class CommonServiceImpl implements CommonService {
         return responseDTO;
     }
 
-    private List<Transaction> getPetsTransactional(RequestDTO requestDTO) {
+    private List<Transaction> getTransactions(RequestDTO requestDTO) {
+
         return asList(
-                TransactionalBuilder
-                        .buildCatTransaction(requestDTO.getCat(), catService),
-                TransactionalBuilder
-                        .buildDogTransaction(requestDTO.getDog(), dogService)
+                buildCatTransaction(requestDTO.getCat(), catService),
+                buildDogTransaction(requestDTO.getDog(), dogService)
         );
     }
 
     private ResponseUser createUser(RequestDTO requestDTO) {
-        UserTransactionImpl userTransactional = TransactionalBuilder
-                .buildUserTransaction(requestDTO.getUser(), userService);
-        return userTransactional.add();
+        return buildUserTransaction(requestDTO.getUser(), userService).add();
     }
 
-    private RequestDTO getPetsWithSettedUser(ResponseUser user, RequestDTO requestDTO) {
+    private RequestDTO attachUser(ResponseUser user, RequestDTO requestDTO) {
         requestDTO.getCat().setUser(user);
         requestDTO.getDog().setUser(user);
         return requestDTO;

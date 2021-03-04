@@ -18,5 +18,4 @@ public class ResponseUser implements ResponseEntity {
 
     private String name;
 
-    private String password;
 }
