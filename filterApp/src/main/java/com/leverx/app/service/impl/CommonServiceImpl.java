@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.leverx.app.transactional.builder.TransactionalBuilder.*;
+import static com.leverx.app.transactional.builder.TransactionalBuilder.buildCatTransaction;
+import static com.leverx.app.transactional.builder.TransactionalBuilder.buildDogTransaction;
+import static com.leverx.app.transactional.builder.TransactionalBuilder.buildUserTransaction;
 import static java.util.Arrays.asList;
 
 @Service
@@ -66,11 +68,11 @@ public class CommonServiceImpl implements CommonService {
         ResponseDTO responseDTO = new ResponseDTO();
         entities.forEach(entity ->
         {
-            if (entity instanceof ResponseUser) {
+            if (entity.getClass().equals(ResponseUser.class)) {
                 responseDTO.setUser((ResponseUser) entity);
-            } else if (entity instanceof ResponseCat) {
+            } else if (entity.getClass().equals(ResponseCat.class)) {
                 responseDTO.setCat((ResponseCat) entity);
-            } else if (entity instanceof ResponseDog) {
+            } else if (entity.getClass().equals(ResponseDog.class)) {
                 responseDTO.setDog((ResponseDog) entity);
             }
         });
