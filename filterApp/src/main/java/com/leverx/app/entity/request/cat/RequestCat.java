@@ -1,6 +1,6 @@
-package com.leverx.app.entity.cat;
+package com.leverx.app.entity.request.cat;
 
-import com.leverx.app.entity.pet.RequestPet;
+import com.leverx.app.entity.request.pet.RequestPet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

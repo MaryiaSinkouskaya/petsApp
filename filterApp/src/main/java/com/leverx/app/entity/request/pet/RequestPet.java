@@ -1,6 +1,6 @@
-package com.leverx.app.entity.pet;
+package com.leverx.app.entity.request.pet;
 
-import com.leverx.app.entity.user.User;
+import com.leverx.app.entity.response.user.ResponseUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +14,6 @@ public abstract class RequestPet {
 
     private String name;
 
-    private User user;
+    private ResponseUser user;
 
 }

@@ -1,7 +1,7 @@
 package com.leverx.app.repository.impl;
 
-import com.leverx.app.entity.dog.Dog;
-import com.leverx.app.entity.dog.RequestDog;
+import com.leverx.app.entity.request.dog.RequestDog;
+import com.leverx.app.entity.response.dog.ResponseDog;
 import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.DogRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,26 +29,26 @@ public class DogRepositoryImpl implements DogRepository {
     private final String dogUrl;
     private final AuthHeaderProvider authHeaderProvider;
 
-    public List<Dog> findAll() {
+    public List<ResponseDog> findAll() {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
-        ResponseEntity<Dog[]> responseEntity = restTemplate.exchange(
+        ResponseEntity<ResponseDog[]> responseEntity = restTemplate.exchange(
                 backendUrl + dogUrl,
                 GET,
                 httpEntity,
-                Dog[].class);
+                ResponseDog[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
 
     @Override
-    public Dog create(RequestDog dog) {
+    public ResponseDog create(RequestDog dog) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<RequestDog> httpEntity = new HttpEntity<>(dog, authHeaderProvider.getAuthHeader());
         return restTemplate.exchange(
                 backendUrl + dogUrl,
                 POST,
                 httpEntity,
-                Dog.class).getBody();
+                ResponseDog.class).getBody();
     }
 
     @Override
@@ -59,6 +59,6 @@ public class DogRepositoryImpl implements DogRepository {
                 backendUrl + dogUrl + id,
                 DELETE,
                 httpEntity,
-                Dog.class);
+                ResponseDog.class);
     }
 }

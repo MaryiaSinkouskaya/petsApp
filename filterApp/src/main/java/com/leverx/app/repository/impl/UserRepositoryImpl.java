@@ -1,7 +1,7 @@
 package com.leverx.app.repository.impl;
 
-import com.leverx.app.entity.user.RequestUser;
-import com.leverx.app.entity.user.User;
+import com.leverx.app.entity.request.user.RequestUser;
+import com.leverx.app.entity.response.user.ResponseUser;
 import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,26 +29,26 @@ public class UserRepositoryImpl implements UserRepository {
     private final String userUrl;
     private final AuthHeaderProvider authHeaderProvider;
 
-    public List<User> findAll() {
+    public List<ResponseUser> findAll() {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
-        ResponseEntity<User[]> responseEntity = restTemplate.exchange(
+        ResponseEntity<ResponseUser[]> responseEntity = restTemplate.exchange(
                 backendUrl + userUrl,
                 GET,
                 httpEntity,
-                User[].class);
+                ResponseUser[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
 
     @Override
-    public User create(RequestUser user) {
+    public ResponseUser create(RequestUser user) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<RequestUser> httpEntity = new HttpEntity<>(user, authHeaderProvider.getAuthHeader());
         return restTemplate.exchange(
                 backendUrl + userUrl,
                 POST,
                 httpEntity,
-                User.class).getBody();
+                ResponseUser.class).getBody();
     }
 
     @Override
@@ -59,6 +59,6 @@ public class UserRepositoryImpl implements UserRepository {
                 backendUrl + userUrl + id,
                 DELETE,
                 httpEntity,
-                User.class);
+                ResponseUser.class);
     }
 }

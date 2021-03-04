@@ -1,7 +1,7 @@
 package com.leverx.app.service.impl;
 
-import com.leverx.app.entity.user.RequestUser;
-import com.leverx.app.entity.user.User;
+import com.leverx.app.entity.request.user.RequestUser;
+import com.leverx.app.entity.response.user.ResponseUser;
 import com.leverx.app.repository.UserRepository;
 import com.leverx.app.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(RequestUser user) {
+    public ResponseUser create(RequestUser user) {
         return userRepository.create(user);
     }
 
     @Override
-    public List<User> findAll() {
+    public List<ResponseUser> findAll() {
         return userRepository.findAll();
     }
 }

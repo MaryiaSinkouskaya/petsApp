@@ -1,14 +1,14 @@
 package com.leverx.app.repository;
 
-import com.leverx.app.entity.dog.Dog;
-import com.leverx.app.entity.dog.RequestDog;
+import com.leverx.app.entity.request.dog.RequestDog;
+import com.leverx.app.entity.response.dog.ResponseDog;
 
 import java.util.List;
 
 public interface DogRepository {
-    List<Dog> findAll();
+    List<ResponseDog> findAll();
 
-    Dog create(RequestDog dog);
+    ResponseDog create(RequestDog dog);
 
     void delete(long id);
 

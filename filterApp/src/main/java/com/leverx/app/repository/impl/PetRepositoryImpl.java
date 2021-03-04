@@ -1,7 +1,7 @@
 package com.leverx.app.repository.impl;
 
 
-import com.leverx.app.entity.pet.Pet;
+import com.leverx.app.entity.response.pet.ResponsePet;
 import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.PetRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +27,14 @@ public class PetRepositoryImpl implements PetRepository {
     private final String petUrl;
     private final AuthHeaderProvider authHeaderProvider;
 
-    public List<Pet> findAll() {
+    public List<ResponsePet> findAll() {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
-        ResponseEntity<Pet[]> responseEntity = restTemplate.exchange(
+        ResponseEntity<ResponsePet[]> responseEntity = restTemplate.exchange(
                 backendUrl + petUrl,
                 GET,
                 httpEntity,
-                Pet[].class);
+                ResponsePet[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
 }

@@ -1,6 +1,7 @@
-package com.leverx.app.entity.cat;
+package com.leverx.app.entity.response.cat;
 
-import com.leverx.app.entity.pet.Pet;
+import com.leverx.app.entity.response.DTO.ResponseEntity;
+import com.leverx.app.entity.response.pet.ResponsePet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Cat extends Pet {
+public class ResponseCat extends ResponsePet implements ResponseEntity {
 
     private long id;
 

@@ -10,5 +10,6 @@ import org.springframework.web.context.annotation.RequestScope;
 @Setter
 @Getter
 public class AuthProvider {
+
     private String auth;
 }

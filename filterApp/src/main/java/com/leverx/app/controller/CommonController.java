@@ -1,8 +1,8 @@
 package com.leverx.app.controller;
 
-import com.leverx.app.entity.DTO.RequestDTO;
-import com.leverx.app.entity.DTO.ResponseDTO;
-import com.leverx.app.entity.DTO.ResponseListDTO;
+import com.leverx.app.entity.request.DTO.RequestDTO;
+import com.leverx.app.entity.response.DTO.ResponseDTO;
+import com.leverx.app.entity.response.DTO.ResponseListDTO;
 import com.leverx.app.provider.AuthProvider;
 import com.leverx.app.service.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -35,10 +35,7 @@ public class CommonController {
     public ResponseDTO setAll(@RequestHeader("Authorization") String auth,
                               @RequestBody RequestDTO requestDTO) {
         authProvider.setAuth(auth);
-        return commonService.createAll(
-                requestDTO.getUser(),
-                requestDTO.getCat(),
-                requestDTO.getDog());
+        return commonService.createAll(requestDTO);
     }
 
 }

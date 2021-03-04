@@ -1,7 +1,7 @@
 package com.leverx.app.repository.impl;
 
-import com.leverx.app.entity.cat.Cat;
-import com.leverx.app.entity.cat.RequestCat;
+import com.leverx.app.entity.request.cat.RequestCat;
+import com.leverx.app.entity.response.cat.ResponseCat;
 import com.leverx.app.provider.AuthHeaderProvider;
 import com.leverx.app.repository.CatRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,26 +29,26 @@ public class CatRepositoryImpl implements CatRepository {
     private final String catUrl;
     private final AuthHeaderProvider authHeaderProvider;
 
-    public List<Cat> findAll() {
+    public List<ResponseCat> findAll() {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
-        ResponseEntity<Cat[]> responseEntity = restTemplate.exchange(
+        ResponseEntity<ResponseCat[]> responseEntity = restTemplate.exchange(
                 backendUrl + catUrl,
                 GET,
                 httpEntity,
-                Cat[].class);
+                ResponseCat[].class);
         return asList(requireNonNull(responseEntity.getBody()));
     }
 
     @Override
-    public Cat create(RequestCat cat) {
+    public ResponseCat create(RequestCat cat) {
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<RequestCat> httpEntity = new HttpEntity<>(cat, authHeaderProvider.getAuthHeader());
         return restTemplate.exchange(
                 backendUrl + catUrl,
                 POST,
                 httpEntity,
-                Cat.class).getBody();
+                ResponseCat.class).getBody();
     }
 
     @Override
@@ -59,6 +59,6 @@ public class CatRepositoryImpl implements CatRepository {
                 backendUrl + catUrl + id,
                 DELETE,
                 httpEntity,
-                Cat.class);
+                ResponseCat.class);
     }
 }
