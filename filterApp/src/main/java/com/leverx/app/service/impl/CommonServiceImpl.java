@@ -2,10 +2,7 @@ package com.leverx.app.service.impl;
 
 import com.leverx.app.entity.request.DTO.RequestDTO;
 import com.leverx.app.entity.response.DTO.ResponseDTO;
-import com.leverx.app.entity.response.DTO.ResponseEntity;
 import com.leverx.app.entity.response.DTO.ResponseListDTO;
-import com.leverx.app.entity.response.cat.ResponseCat;
-import com.leverx.app.entity.response.dog.ResponseDog;
 import com.leverx.app.entity.response.user.ResponseUser;
 import com.leverx.app.service.CatService;
 import com.leverx.app.service.CommonService;
@@ -18,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,31 +45,15 @@ public class CommonServiceImpl implements CommonService {
         ResponseUser user = createUser(requestDTO);
         List<Transaction> transactions = getTransactions(attachUser(user, requestDTO));
         List<Transaction> successfulTransactions = new LinkedList<>();
-        List<ResponseEntity> responseEntities = new ArrayList<>();
-        responseEntities.add(user);
-
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setUser(user);
         transactions.forEach(transaction -> {
             try {
-                responseEntities.add(transaction.add());
+                responseDTO.add(transaction.add());
                 successfulTransactions.add(transaction);
             } catch (HttpClientErrorException | HttpServerErrorException exception) {
                 successfulTransactions.forEach(Transaction::rollback);
                 throw new HttpClientErrorException(exception.getStatusCode());
-            }
-        });
-        return convertToResponseDTO(responseEntities);
-    }
-
-    private ResponseDTO convertToResponseDTO(List<ResponseEntity> entities) {
-        ResponseDTO responseDTO = new ResponseDTO();
-        entities.forEach(entity ->
-        {
-            if (entity.getClass().equals(ResponseUser.class)) {
-                responseDTO.setUser((ResponseUser) entity);
-            } else if (entity.getClass().equals(ResponseCat.class)) {
-                responseDTO.setCat((ResponseCat) entity);
-            } else if (entity.getClass().equals(ResponseDog.class)) {
-                responseDTO.setDog((ResponseDog) entity);
             }
         });
         return responseDTO;

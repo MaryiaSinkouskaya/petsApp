@@ -17,4 +17,15 @@ public class ResponseDTO {
     private ResponseUser user;
     private ResponseCat cat;
     private ResponseDog dog;
+
+    public ResponseDTO add(ResponseEntity entity) {
+        if (entity.getClass().equals(ResponseUser.class)) {
+            this.setUser((ResponseUser) entity);
+        } else if (entity.getClass().equals(ResponseCat.class)) {
+            this.setCat((ResponseCat) entity);
+        } else if (entity.getClass().equals(ResponseDog.class)) {
+            this.setDog((ResponseDog) entity);
+        }
+        return this;
+    }
 }
