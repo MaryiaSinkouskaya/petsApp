@@ -23,14 +23,12 @@ public class CommonController {
     private final CommonService commonService;
     private final AuthProvider authProvider;
 
-    @RequestScope
     @RequestMapping(method = GET)
     public ResponseListDTO getAll(@RequestHeader("Authorization") String auth) {
         authProvider.setAuth(auth);
         return commonService.findAll();
     }
 
-    @RequestScope
     @RequestMapping(method = POST)
     public ResponseDTO setAll(@RequestHeader("Authorization") String auth,
                               @RequestBody RequestDTO requestDTO) {
