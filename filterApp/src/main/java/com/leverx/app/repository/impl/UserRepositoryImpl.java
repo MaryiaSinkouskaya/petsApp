@@ -1,64 +1,73 @@
 package com.leverx.app.repository.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leverx.app.entity.request.user.RequestUser;
 import com.leverx.app.entity.response.user.ResponseUser;
-import com.leverx.app.provider.AuthHeaderProvider;
+import com.leverx.app.exceptions.RepositoryException;
 import com.leverx.app.repository.UserRepository;
+import com.sap.cloud.sdk.cloudplatform.connectivity.DestinationAccessor;
+import com.sap.cloud.sdk.cloudplatform.connectivity.HttpClientAccessor;
+import com.sap.cloud.sdk.cloudplatform.connectivity.HttpDestination;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static java.util.Objects.requireNonNull;
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
 
 @RequiredArgsConstructor
 @Component
 public class UserRepositoryImpl implements UserRepository {
 
-    @Value(value = "${backend.server.url}")
-    private final String backendUrl;
     @Value(value = "${user.url}")
     private final String userUrl;
-    private final AuthHeaderProvider authHeaderProvider;
+    private final ObjectMapper mapper;
+    private final HttpDestination httpDestination = DestinationAccessor
+            .getDestination("petsDestination")
+            .asHttp();
+    private final HttpClient httpClient = HttpClientAccessor.getHttpClient(httpDestination);
 
     public List<ResponseUser> findAll() {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
-        ResponseEntity<ResponseUser[]> responseEntity = restTemplate.exchange(
-                backendUrl + userUrl,
-                GET,
-                httpEntity,
-                ResponseUser[].class);
-        return asList(requireNonNull(responseEntity.getBody()));
+        try {
+            HttpGet httpGet = new HttpGet(httpDestination.getUri() + userUrl);
+            HttpResponse response = httpClient.execute(httpGet);
+            String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+            return asList(mapper.readValue(responseStr, ResponseUser[].class));
+        } catch (IOException e) {
+            throw new RepositoryException("can't get users");
+        }
     }
 
     @Override
     public ResponseUser create(RequestUser user) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<RequestUser> httpEntity = new HttpEntity<>(user, authHeaderProvider.getAuthHeader());
-        return restTemplate.exchange(
-                backendUrl + userUrl,
-                POST,
-                httpEntity,
-                ResponseUser.class).getBody();
+        try {
+            HttpPost httpPost = new HttpPost(httpDestination.getUri() + userUrl);
+            httpPost.setEntity(new StringEntity(mapper.writeValueAsString(user)));
+            httpPost.setHeader("Content-type", "application/json");
+            HttpResponse response = httpClient.execute(httpPost);
+            String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+            return mapper.readValue(responseStr, ResponseUser.class);
+        } catch (IOException e) {
+            throw new RepositoryException("can't create user");
+        }
     }
 
     @Override
     public void delete(long id) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpEntity<Object> httpEntity = new HttpEntity<>(authHeaderProvider.getAuthHeader());
-        restTemplate.exchange(
-                backendUrl + userUrl + id,
-                DELETE,
-                httpEntity,
-                ResponseUser.class);
+        try {
+            HttpDelete httpDelete = new HttpDelete(httpDestination.getUri() + userUrl + id);
+            httpClient.execute(httpDelete);
+        } catch (IOException e) {
+            throw new RepositoryException("can't delete user");
+        }
     }
 }

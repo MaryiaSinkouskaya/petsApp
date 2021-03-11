@@ -1,6 +1,7 @@
 package com.leverx.app.aop;
 
 
+import com.leverx.app.exceptions.RepositoryException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,4 +34,10 @@ public class ExceptionsHandler {
     public ResponseEntity<Object> nullPointer() {
         return status(INTERNAL_SERVER_ERROR).body(NullPointerException.class);
     }
+
+    @ExceptionHandler(RepositoryException.class)
+    public ResponseEntity<Object> repoException() {
+        return status(INTERNAL_SERVER_ERROR).body(RepositoryException.class);
+    }
+
 }

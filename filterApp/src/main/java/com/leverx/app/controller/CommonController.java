@@ -3,14 +3,11 @@ package com.leverx.app.controller;
 import com.leverx.app.entity.request.DTO.RequestDTO;
 import com.leverx.app.entity.response.DTO.ResponseDTO;
 import com.leverx.app.entity.response.DTO.ResponseListDTO;
-import com.leverx.app.provider.AuthProvider;
 import com.leverx.app.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.RequestScope;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -21,19 +18,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class CommonController {
 
     private final CommonService commonService;
-    private final AuthProvider authProvider;
 
     @RequestMapping(method = GET)
-    public ResponseListDTO getAll(@RequestHeader("Authorization") String auth) {
-        authProvider.setAuth(auth);
+    public ResponseListDTO getAll() {
         return commonService.findAll();
     }
 
     @RequestMapping(method = POST)
-    public ResponseDTO setAll(@RequestHeader("Authorization") String auth,
-                              @RequestBody RequestDTO requestDTO) {
-        authProvider.setAuth(auth);
+    public ResponseDTO setAll(@RequestBody RequestDTO requestDTO) {
         return commonService.createAll(requestDTO);
     }
-
 }

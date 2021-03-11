@@ -5,7 +5,6 @@ import com.leverx.app.entity.response.DTO.ResponseEntity;
 import com.leverx.app.entity.response.dog.ResponseDog;
 import com.leverx.app.service.DogService;
 import com.leverx.app.transactional.DogTransaction;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 

@@ -5,7 +5,6 @@ import com.leverx.app.entity.response.DTO.ResponseEntity;
 import com.leverx.app.entity.response.cat.ResponseCat;
 import com.leverx.app.service.CatService;
 import com.leverx.app.transactional.CatTransaction;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
