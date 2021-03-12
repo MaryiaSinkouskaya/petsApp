@@ -5,7 +5,6 @@ import com.leverx.app.dto.response.ResponseDto;
 import com.leverx.app.dto.response.ResponseListDto;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface CommonService {
 
     ResponseListDto findAll();

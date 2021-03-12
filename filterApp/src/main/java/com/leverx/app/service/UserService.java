@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface UserService {
 
     List<ResponseUser> findAll();
@@ -14,5 +13,4 @@ public interface UserService {
     ResponseUser create(RequestUser user);
 
     void delete(long id);
-
 }
