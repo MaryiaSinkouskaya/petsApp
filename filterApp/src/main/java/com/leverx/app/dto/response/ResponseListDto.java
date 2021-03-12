@@ -1,4 +1,4 @@
-package com.leverx.app.entity.response.DTO;
+package com.leverx.app.dto.response;
 
 import com.leverx.app.entity.response.cat.ResponseCat;
 import com.leverx.app.entity.response.dog.ResponseDog;
@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ResponseListDTO {
+public class ResponseListDto {
 
     private List<ResponseDog> dogs;
     private List<ResponseCat> cats;

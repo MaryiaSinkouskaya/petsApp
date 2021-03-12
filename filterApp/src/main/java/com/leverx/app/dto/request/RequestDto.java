@@ -1,4 +1,4 @@
-package com.leverx.app.entity.request.DTO;
+package com.leverx.app.dto.request;
 
 import com.leverx.app.entity.request.cat.RequestCat;
 import com.leverx.app.entity.request.dog.RequestDog;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class RequestDTO {
+public class RequestDto {
 
     private RequestCat cat;
     private RequestDog dog;

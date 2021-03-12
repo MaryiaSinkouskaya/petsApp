@@ -1,4 +1,4 @@
-package com.leverx.app.entity.response.DTO;
+package com.leverx.app.dto.response;
 
 
 public interface ResponseEntity {

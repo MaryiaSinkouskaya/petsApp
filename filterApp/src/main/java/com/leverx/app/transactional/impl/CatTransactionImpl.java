@@ -1,7 +1,7 @@
 package com.leverx.app.transactional.impl;
 
 import com.leverx.app.entity.request.cat.RequestCat;
-import com.leverx.app.entity.response.DTO.ResponseEntity;
+import com.leverx.app.dto.response.ResponseEntity;
 import com.leverx.app.entity.response.cat.ResponseCat;
 import com.leverx.app.service.CatService;
 import com.leverx.app.transactional.CatTransaction;
@@ -20,7 +20,7 @@ public class CatTransactionImpl implements CatTransaction {
     private static final String ID = "cat_id";
 
     @Override
-    public ResponseEntity add() {
+    public ResponseEntity save() {
         ResponseCat responseCat = catService.create(requestCat);
         currentRequestAttributes().setAttribute(ID, responseCat.getId(),
                 SCOPE_REQUEST);

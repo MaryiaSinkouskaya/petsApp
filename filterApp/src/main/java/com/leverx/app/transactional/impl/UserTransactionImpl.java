@@ -19,7 +19,7 @@ public class UserTransactionImpl implements UserTransaction {
     private static final String ID = "user_id";
 
     @Override
-    public ResponseUser add() {
+    public ResponseUser save() {
         ResponseUser responseUser = userService.create(requestUser);
         currentRequestAttributes().setAttribute(ID, responseUser.getId(),
                 SCOPE_REQUEST);

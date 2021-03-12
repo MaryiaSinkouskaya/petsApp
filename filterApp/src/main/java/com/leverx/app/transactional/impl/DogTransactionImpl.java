@@ -1,7 +1,7 @@
 package com.leverx.app.transactional.impl;
 
 import com.leverx.app.entity.request.dog.RequestDog;
-import com.leverx.app.entity.response.DTO.ResponseEntity;
+import com.leverx.app.dto.response.ResponseEntity;
 import com.leverx.app.entity.response.dog.ResponseDog;
 import com.leverx.app.service.DogService;
 import com.leverx.app.transactional.DogTransaction;
@@ -21,7 +21,7 @@ public class DogTransactionImpl implements DogTransaction {
 
 
     @Override
-    public ResponseEntity add() {
+    public ResponseEntity save() {
         ResponseDog responseDog = dogService.create(requestDog);
         currentRequestAttributes().setAttribute(ID, responseDog.getId(),
                 SCOPE_REQUEST);

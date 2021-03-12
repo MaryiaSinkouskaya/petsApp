@@ -1,8 +1,8 @@
 package com.leverx.app.controller;
 
-import com.leverx.app.entity.request.DTO.RequestDTO;
-import com.leverx.app.entity.response.DTO.ResponseDTO;
-import com.leverx.app.entity.response.DTO.ResponseListDTO;
+import com.leverx.app.dto.request.RequestDto;
+import com.leverx.app.dto.response.ResponseDto;
+import com.leverx.app.dto.response.ResponseListDto;
 import com.leverx.app.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +20,12 @@ public class CommonController {
     private final CommonService commonService;
 
     @RequestMapping(method = GET)
-    public ResponseListDTO getAll() {
+    public ResponseListDto getAll() {
         return commonService.findAll();
     }
 
     @RequestMapping(method = POST)
-    public ResponseDTO setAll(@RequestBody RequestDTO requestDTO) {
+    public ResponseDto setAll(@RequestBody RequestDto requestDTO) {
         return commonService.createAll(requestDTO);
     }
 }

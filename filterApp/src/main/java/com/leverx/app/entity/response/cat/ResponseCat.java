@@ -1,6 +1,6 @@
 package com.leverx.app.entity.response.cat;
 
-import com.leverx.app.entity.response.DTO.ResponseEntity;
+import com.leverx.app.dto.response.ResponseEntity;
 import com.leverx.app.entity.response.pet.ResponsePet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

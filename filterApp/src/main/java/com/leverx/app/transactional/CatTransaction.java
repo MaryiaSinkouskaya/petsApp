@@ -1,11 +1,11 @@
 package com.leverx.app.transactional;
 
-import com.leverx.app.entity.response.DTO.ResponseEntity;
+import com.leverx.app.dto.response.ResponseEntity;
 
 public interface CatTransaction extends Transaction {
 
     @Override
-    ResponseEntity add();
+    ResponseEntity save();
 
     @Override
     void rollback();

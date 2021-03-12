@@ -1,4 +1,4 @@
-package com.leverx.app.entity.response.DTO;
+package com.leverx.app.dto.response;
 
 import com.leverx.app.entity.response.cat.ResponseCat;
 import com.leverx.app.entity.response.dog.ResponseDog;
@@ -12,13 +12,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDTO {
+public class ResponseDto {
 
     private ResponseUser user;
     private ResponseCat cat;
     private ResponseDog dog;
 
-    public ResponseDTO add(ResponseEntity entity) {
+    public ResponseDto add(ResponseEntity entity) {
         if (entity.getClass().equals(ResponseUser.class)) {
             this.setUser((ResponseUser) entity);
         } else if (entity.getClass().equals(ResponseCat.class)) {

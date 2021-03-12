@@ -1,8 +1,8 @@
 package com.leverx.app.service.impl;
 
-import com.leverx.app.entity.request.DTO.RequestDTO;
-import com.leverx.app.entity.response.DTO.ResponseDTO;
-import com.leverx.app.entity.response.DTO.ResponseListDTO;
+import com.leverx.app.dto.request.RequestDto;
+import com.leverx.app.dto.response.ResponseDto;
+import com.leverx.app.dto.response.ResponseListDto;
 import com.leverx.app.entity.response.user.ResponseUser;
 import com.leverx.app.service.CatService;
 import com.leverx.app.service.CommonService;
@@ -33,23 +33,23 @@ public class CommonServiceImpl implements CommonService {
     private final DogService dogService;
 
     @Override
-    public ResponseListDTO findAll() {
-        return new ResponseListDTO(
+    public ResponseListDto findAll() {
+        return new ResponseListDto(
                 dogService.findAll(),
                 catService.findAll(),
                 userService.findAll());
     }
 
     @Override
-    public ResponseDTO createAll(RequestDTO requestDTO) {
+    public ResponseDto createAll(RequestDto requestDTO) {
         ResponseUser user = createUser(requestDTO);
         List<Transaction> transactions = getTransactions(attachUser(user, requestDTO));
         List<Transaction> successfulTransactions = new LinkedList<>();
-        ResponseDTO responseDTO = new ResponseDTO();
+        ResponseDto responseDTO = new ResponseDto();
         responseDTO.setUser(user);
         transactions.forEach(transaction -> {
             try {
-                responseDTO.add(transaction.add());
+                responseDTO.add(transaction.save());
                 successfulTransactions.add(transaction);
             } catch (HttpClientErrorException | HttpServerErrorException exception) {
                 successfulTransactions.forEach(Transaction::rollback);
@@ -59,7 +59,7 @@ public class CommonServiceImpl implements CommonService {
         return responseDTO;
     }
 
-    private List<Transaction> getTransactions(RequestDTO requestDTO) {
+    private List<Transaction> getTransactions(RequestDto requestDTO) {
 
         return asList(
                 buildCatTransaction(requestDTO.getCat(), catService),
@@ -67,11 +67,11 @@ public class CommonServiceImpl implements CommonService {
         );
     }
 
-    private ResponseUser createUser(RequestDTO requestDTO) {
-        return buildUserTransaction(requestDTO.getUser(), userService).add();
+    private ResponseUser createUser(RequestDto requestDTO) {
+        return buildUserTransaction(requestDTO.getUser(), userService).save();
     }
 
-    private RequestDTO attachUser(ResponseUser user, RequestDTO requestDTO) {
+    private RequestDto attachUser(ResponseUser user, RequestDto requestDTO) {
         requestDTO.getCat().setUser(user);
         requestDTO.getDog().setUser(user);
         return requestDTO;
