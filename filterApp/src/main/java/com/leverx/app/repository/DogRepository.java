@@ -6,6 +6,7 @@ import com.leverx.app.entity.response.dog.ResponseDog;
 import java.util.List;
 
 public interface DogRepository {
+
     List<ResponseDog> findAll();
 
     ResponseDog create(RequestDog dog);

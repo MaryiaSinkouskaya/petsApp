@@ -6,6 +6,7 @@ import com.leverx.app.entity.response.cat.ResponseCat;
 import java.util.List;
 
 public interface CatRepository {
+
     List<ResponseCat> findAll();
 
     ResponseCat create(RequestCat cat);
