@@ -10,34 +10,37 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestClientException;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.ResponseEntity.status;
 
 @ControllerAdvice
 public class ExceptionsHandler {
 
     @ExceptionHandler(HttpClientErrorException.class)
-    public ResponseEntity<Object> httpClientErrorException(HttpClientErrorException exception) {
-        return status(exception.getStatusCode()).build();
+    public ResponseEntity<HttpClientErrorException> handleHttpClientErrorException(
+            final HttpClientErrorException exception) {
+        return new ResponseEntity<>(exception, exception.getStatusCode());
     }
 
     @ExceptionHandler(HttpServerErrorException.class)
-    public ResponseEntity<Object> httpServerErrorException(HttpServerErrorException exception) {
-        return status(exception.getStatusCode()).build();
+    public ResponseEntity<HttpServerErrorException> handleHttpServerErrorException(
+            final HttpServerErrorException exception) {
+        return new ResponseEntity<>(exception, exception.getStatusCode());
     }
 
     @ExceptionHandler(value = {InternalError.class, RestClientException.class})
-    public ResponseEntity<Object> internalException() {
-        return status(INTERNAL_SERVER_ERROR).build();
+    public ResponseEntity<RestClientException> handleInternalException(
+            final RestClientException exception) {
+        return new ResponseEntity<>(exception, INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<Object> nullPointer() {
-        return status(INTERNAL_SERVER_ERROR).body(NullPointerException.class);
+    public ResponseEntity<NullPointerException> handleNullPointerException(
+            final NullPointerException exception) {
+        return new ResponseEntity<>(exception, INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(RepositoryException.class)
-    public ResponseEntity<Object> repoException() {
-        return status(INTERNAL_SERVER_ERROR).body(RepositoryException.class);
+    public ResponseEntity<RepositoryException> handleRepositoryException(
+            final RepositoryException exception) {
+        return new ResponseEntity<>(exception, INTERNAL_SERVER_ERROR);
     }
-
 }
