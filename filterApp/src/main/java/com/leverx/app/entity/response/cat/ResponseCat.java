@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseCat extends ResponsePet implements ResponseEntity {
+public class ResponseCat extends ResponsePet{
 
     private long id;
 

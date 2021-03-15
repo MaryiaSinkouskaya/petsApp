@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ResponseDog extends ResponsePet implements ResponseEntity {
+public class ResponseDog extends ResponsePet {
 
     private long id;
 
