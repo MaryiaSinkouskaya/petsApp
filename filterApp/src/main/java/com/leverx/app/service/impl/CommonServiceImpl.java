@@ -3,6 +3,8 @@ package com.leverx.app.service.impl;
 import com.leverx.app.dto.request.RequestDto;
 import com.leverx.app.dto.response.ResponseDto;
 import com.leverx.app.dto.response.ResponseListDto;
+import com.leverx.app.entity.response.cat.ResponseCat;
+import com.leverx.app.entity.response.dog.ResponseDog;
 import com.leverx.app.entity.response.user.ResponseUser;
 import com.leverx.app.service.CatService;
 import com.leverx.app.service.CommonService;
@@ -21,7 +23,6 @@ import java.util.List;
 import static com.leverx.app.transactional.builder.TransactionalBuilder.buildCatTransaction;
 import static com.leverx.app.transactional.builder.TransactionalBuilder.buildDogTransaction;
 import static com.leverx.app.transactional.builder.TransactionalBuilder.buildUserTransaction;
-import static java.util.Arrays.asList;
 
 @Service
 @RequiredArgsConstructor
@@ -43,37 +44,33 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public ResponseDto createAll(RequestDto requestDTO) {
         ResponseUser user = createUser(requestDTO);
-        List<Transaction> transactions = getTransactions(attachUser(user, requestDTO));
         List<Transaction> successfulTransactions = new LinkedList<>();
         ResponseDto responseDTO = new ResponseDto();
         responseDTO.setUser(user);
-        transactions.forEach(transaction -> {
-            try {
-                responseDTO.add(transaction.save());
-                successfulTransactions.add(transaction);
-            } catch (HttpClientErrorException | HttpServerErrorException exception) {
-                successfulTransactions.forEach(Transaction::rollback);
-                throw new HttpClientErrorException(exception.getStatusCode());
-            }
-        });
+        try {
+            Transaction currentTransaction = buildDogTransaction(requestDTO.getDog(), dogService);
+            responseDTO.setDog((ResponseDog) currentTransaction.save());
+            successfulTransactions.add(currentTransaction);
+
+            currentTransaction = buildCatTransaction(requestDTO.getCat(), catService);
+            responseDTO.setCat((ResponseCat) currentTransaction.save());
+            successfulTransactions.add(currentTransaction);
+        } catch (HttpClientErrorException | HttpServerErrorException exception) {
+            successfulTransactions.forEach(Transaction::rollback);
+            throw new HttpClientErrorException(exception.getStatusCode());
+        }
         return responseDTO;
     }
 
-    private List<Transaction> getTransactions(RequestDto requestDTO) {
-
-        return asList(
-                buildCatTransaction(requestDTO.getCat(), catService),
-                buildDogTransaction(requestDTO.getDog(), dogService)
-        );
-    }
-
     private ResponseUser createUser(RequestDto requestDTO) {
-        return buildUserTransaction(requestDTO.getUser(), userService).save();
+        ResponseUser user = buildUserTransaction(requestDTO.getUser(), userService).save();
+        attachUserToRequestPets(user, requestDTO);
+        return user;
+
     }
 
-    private RequestDto attachUser(ResponseUser user, RequestDto requestDTO) {
+    private void attachUserToRequestPets(ResponseUser user, RequestDto requestDTO) {
         requestDTO.getCat().setUser(user);
         requestDTO.getDog().setUser(user);
-        return requestDTO;
     }
 }

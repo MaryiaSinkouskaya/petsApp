@@ -25,7 +25,7 @@ public class CommonController {
     }
 
     @RequestMapping(method = POST)
-    public ResponseDto setAll(@RequestBody RequestDto requestDTO) {
+    public ResponseDto createPetsAndUser(@RequestBody RequestDto requestDTO) {
         return commonService.createAll(requestDTO);
     }
 }
