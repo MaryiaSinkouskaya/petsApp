@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class ResponsePet  implements ResponseEntity {
+public abstract class ResponsePet implements ResponseEntity {
 
     private long id;
 

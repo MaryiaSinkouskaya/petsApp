@@ -3,7 +3,6 @@ package com.leverx.app.service;
 import com.leverx.app.dto.request.RequestDto;
 import com.leverx.app.dto.response.ResponseDto;
 import com.leverx.app.dto.response.ResponseListDto;
-import org.springframework.stereotype.Service;
 
 public interface CommonService {
 
