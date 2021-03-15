@@ -1,4 +1,4 @@
-package com.leverx.app.repository.impl;
+package com.leverx.app.repository.impl.destination;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leverx.app.entity.request.dog.RequestDog;
@@ -8,6 +8,7 @@ import com.leverx.app.provider.DestinationProvider;
 import com.leverx.app.repository.DogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ import static java.util.Arrays.asList;
 
 @RequiredArgsConstructor
 @Component
+@Profile("destination")
 public class DogRepositoryImpl implements DogRepository {
 
     @Value(value = "${dog.url}")

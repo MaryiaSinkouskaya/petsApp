@@ -57,5 +57,28 @@
                 <version>2.4.2</version>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+    <profiles>
+        <profile>
+            <id>destination</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>destination</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>template</id>
+            <properties>
+                <spring.profiles.active>template</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>

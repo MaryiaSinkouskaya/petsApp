@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Log4j2
 public class UserLogAspect {
 
-    @Pointcut("execution(public * com.leverx.app.repository.impl.UserRepositoryImpl.*(..))")
+    @Pointcut("execution(public * com.leverx.app.repository.impl.destination.UserRepositoryImpl.*(..))")
     public void userRepoExec() {
     }
 

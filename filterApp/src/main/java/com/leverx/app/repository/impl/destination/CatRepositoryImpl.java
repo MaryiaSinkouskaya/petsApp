@@ -1,4 +1,4 @@
-package com.leverx.app.repository.impl;
+package com.leverx.app.repository.impl.destination;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leverx.app.entity.request.cat.RequestCat;
@@ -7,8 +7,8 @@ import com.leverx.app.exceptions.RepositoryException;
 import com.leverx.app.provider.DestinationProvider;
 import com.leverx.app.repository.CatRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import static java.util.Arrays.asList;
 
 @RequiredArgsConstructor
 @Component
-@Log4j2
+@Profile("destination")
 public class CatRepositoryImpl implements CatRepository {
 
     @Value(value = "${cat.url}")
