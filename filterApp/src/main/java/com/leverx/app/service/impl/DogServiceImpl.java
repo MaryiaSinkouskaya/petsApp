@@ -1,6 +1,7 @@
 package com.leverx.app.service.impl;
 
-import com.leverx.app.entity.dog.Dog;
+import com.leverx.app.entity.request.dog.RequestDog;
+import com.leverx.app.entity.response.dog.ResponseDog;
 import com.leverx.app.repository.DogRepository;
 import com.leverx.app.service.DogService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,12 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public Dog create(Dog dog) {
+    public ResponseDog create(RequestDog dog) {
         return dogRepository.create(dog);
     }
 
     @Override
-    public List<Dog> findAll() {
+    public List<ResponseDog> findAll() {
         return dogRepository.findAll();
     }
 

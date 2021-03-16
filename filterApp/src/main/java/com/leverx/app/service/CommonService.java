@@ -1,15 +1,12 @@
 package com.leverx.app.service;
 
-import com.leverx.app.entity.DTO.ResponseDTO;
-import com.leverx.app.entity.DTO.ResponseListDTO;
-import com.leverx.app.entity.cat.Cat;
-import com.leverx.app.entity.dog.Dog;
-import com.leverx.app.entity.user.User;
-import org.springframework.stereotype.Service;
+import com.leverx.app.dto.request.RequestDto;
+import com.leverx.app.dto.response.ResponseDto;
+import com.leverx.app.dto.response.ResponseListDto;
 
-@Service
 public interface CommonService {
-    ResponseListDTO findAll();
 
-    ResponseDTO createAll(User user, Cat cat, Dog dog);
+    ResponseListDto findAll();
+
+    ResponseDto createAll(RequestDto requestDTO);
 }

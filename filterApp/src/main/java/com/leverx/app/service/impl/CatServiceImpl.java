@@ -1,6 +1,7 @@
 package com.leverx.app.service.impl;
 
-import com.leverx.app.entity.cat.Cat;
+import com.leverx.app.entity.request.cat.RequestCat;
+import com.leverx.app.entity.response.cat.ResponseCat;
 import com.leverx.app.repository.CatRepository;
 import com.leverx.app.service.CatService;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,12 @@ public class CatServiceImpl implements CatService {
     private final CatRepository catRepository;
 
     @Override
-    public Cat create(Cat cat) {
+    public ResponseCat create(RequestCat cat) {
         return catRepository.create(cat);
     }
 
     @Override
-    public List<Cat> findAll() {
+    public List<ResponseCat> findAll() {
         return catRepository.findAll();
     }
 

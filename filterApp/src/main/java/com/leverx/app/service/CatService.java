@@ -1,17 +1,15 @@
 package com.leverx.app.service;
 
-import com.leverx.app.entity.cat.Cat;
-import org.springframework.stereotype.Service;
+import com.leverx.app.entity.request.cat.RequestCat;
+import com.leverx.app.entity.response.cat.ResponseCat;
 
 import java.util.List;
 
-@Service
 public interface CatService {
 
+    List<ResponseCat> findAll();
 
-    List<Cat> findAll();
-
-    Cat create(Cat cat);
+    ResponseCat create(RequestCat cat);
 
     void delete(long id);
 }
