@@ -16,6 +16,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.net.URI;
 
+import static com.sap.cloud.sdk.cloudplatform.connectivity.DestinationAccessor.*;
+import static com.sap.cloud.sdk.cloudplatform.connectivity.HttpClientAccessor.*;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -24,8 +26,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 public class DestinationProvider {
 
-    private final Destination destination = DestinationAccessor.getDestination("petsDestination");
-    private final HttpClient httpClient = HttpClientAccessor.getHttpClient(destination.asHttp());
+    private final Destination destination = getDestination("petsDestination");
+    private final HttpClient httpClient = getHttpClient(destination.asHttp());
     private final URI destinationUri = destination.asHttp().getUri();
 
     public String get(String uri) throws IOException {
