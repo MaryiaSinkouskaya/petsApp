@@ -88,22 +88,22 @@ public class AppDataSource implements DataSource {
         switch (sourceEntityName) {
             case ENTITY_SET_NAME_USERS:
                 User user = (User) sourceData;
-                if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
+                if (ENTITY_SET_NAME_PETS.equals(targetEntityName)) {
                     return user.getPets();
                 }
             case ENTITY_SET_NAME_PETS:
                 Pet pet = (Pet) sourceData;
-                if (ENTITY_SET_NAME_PETS.equals(targetEntityName)) {
+                if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
                     return pet.getUser();
                 }
             case ENTITY_SET_NAME_CATS:
                 Cat cat = (Cat) sourceData;
-                if (ENTITY_SET_NAME_CATS.equals(targetEntityName)) {
+                if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
                     return cat.getUser();
                 }
             case ENTITY_SET_NAME_DOGS:
                 Dog dog = (Dog) sourceData;
-                if (ENTITY_SET_NAME_DOGS.equals(targetEntityName)) {
+                if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
                     return dog.getUser();
                 }
         }
