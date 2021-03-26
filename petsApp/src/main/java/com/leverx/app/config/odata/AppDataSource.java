@@ -1,5 +1,9 @@
 package com.leverx.app.config.odata;
 
+import com.leverx.app.config.odata.edm.CatEdm;
+import com.leverx.app.config.odata.edm.DogEdm;
+import com.leverx.app.config.odata.edm.PetEdm;
+import com.leverx.app.config.odata.edm.UserEdm;
 import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.entity.dog.Dog;
 import com.leverx.app.entity.pet.Pet;
@@ -98,24 +102,24 @@ public class AppDataSource implements DataSource {
         String targetEntityName = targetEntitySet.getName();
         switch (sourceEntityName) {
             case ENTITY_SET_NAME_USERS:
-                User user = (User) sourceData;
+                UserEdm user = (UserEdm) sourceData;
                 if (ENTITY_SET_NAME_PETS.equals(targetEntityName)) {
-                    return convertPets(user.getPets());
+                    return user.getPets();
                 }
             case ENTITY_SET_NAME_PETS:
-                Pet pet = (Pet) sourceData;
+                PetEdm pet = (PetEdm) sourceData;
                 if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return convertUser(pet.getUser());
+                    return pet.getUser();
                 }
             case ENTITY_SET_NAME_CATS:
-                Cat cat = (Cat) sourceData;
+                CatEdm cat = (CatEdm) sourceData;
                 if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return convertUser(cat.getUser());
+                    return cat.getUser();
                 }
             case ENTITY_SET_NAME_DOGS:
-                Dog dog = (Dog) sourceData;
+                DogEdm dog = (DogEdm) sourceData;
                 if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return convertUser(dog.getUser());
+                    return dog.getUser();
                 }
         }
         throw new EdmException(ENTITY);
