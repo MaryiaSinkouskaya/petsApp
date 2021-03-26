@@ -1,5 +1,7 @@
 package com.leverx.app.config.odata;
 
+import com.leverx.app.config.odata.edm.PetEdm;
+import com.leverx.app.config.odata.edm.mapper.EdmMapper;
 import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.entity.dog.Dog;
 import com.leverx.app.entity.pet.Pet;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.leverx.app.config.odata.AppContext.getApplicationContext;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.*;
 import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_CATS;
 import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_DOGS;
 import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_PETS;
@@ -44,13 +47,13 @@ public class AppDataSource implements DataSource {
         String entitySetName = entitySet.getName();
         switch (entitySetName) {
             case ENTITY_SET_NAME_PETS:
-                return petService.findAll();
+                return convertPets(petService.findAll());
             case ENTITY_SET_NAME_CATS:
-                return catService.findAll();
+                return convertCats(catService.findAll());
             case ENTITY_SET_NAME_DOGS:
-                return dogService.findAll();
+                return convertDogs(dogService.findAll());
             case ENTITY_SET_NAME_USERS:
-                return userService.findAll();
+                return convertUsers(userService.findAll());
             default:
                 throw new ODataNotFoundException(ENTITY);
         }
@@ -62,13 +65,13 @@ public class AppDataSource implements DataSource {
         Long firstLayerEntityId = (Long) keys.get("Id");
         switch (entitySetName) {
             case ENTITY_SET_NAME_PETS:
-                return petService.find(firstLayerEntityId);
+                return convertPet(petService.find(firstLayerEntityId).get());
             case ENTITY_SET_NAME_CATS:
-                return catService.find(firstLayerEntityId);
+                return convertCat(catService.find(firstLayerEntityId).get());
             case ENTITY_SET_NAME_DOGS:
-                return dogService.find(firstLayerEntityId);
+                return convertDog(dogService.find(firstLayerEntityId).get());
             case ENTITY_SET_NAME_USERS:
-                return userService.find(firstLayerEntityId);
+                return convertUser(userService.find(firstLayerEntityId).get());
             default:
                 throw new ODataNotFoundException(ENTITY);
         }
@@ -89,22 +92,22 @@ public class AppDataSource implements DataSource {
             case ENTITY_SET_NAME_USERS:
                 User user = (User) sourceData;
                 if (ENTITY_SET_NAME_PETS.equals(targetEntityName)) {
-                    return user.getPets();
+                    return convertPets(user.getPets());
                 }
             case ENTITY_SET_NAME_PETS:
                 Pet pet = (Pet) sourceData;
                 if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return pet.getUser();
+                    return convertUser(pet.getUser());
                 }
             case ENTITY_SET_NAME_CATS:
                 Cat cat = (Cat) sourceData;
                 if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return cat.getUser();
+                    return convertUser(cat.getUser());
                 }
             case ENTITY_SET_NAME_DOGS:
                 Dog dog = (Dog) sourceData;
                 if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return dog.getUser();
+                    return convertUser(dog.getUser());
                 }
         }
         return null;

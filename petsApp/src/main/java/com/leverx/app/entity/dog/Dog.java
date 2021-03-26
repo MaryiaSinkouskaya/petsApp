@@ -31,18 +31,12 @@ import static org.apache.olingo.odata2.api.annotation.edm.EdmType.STRING;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "dog")
-@EdmEntitySet(name = ENTITY_SET_NAME_DOGS, container = ENTITY_CONTAINER)
-@EdmEntityType(name = ENTITY_NAME_DOG, namespace = NAMESPACE)
 public class Dog extends Pet {
 
     @Id
     @Column(name = "id")
-    @EdmKey
-    @EdmProperty(type = INT64)
     private long id;
 
     @Column(name = "paw_colour")
-    @Enumerated(EnumType.STRING)
-    @EdmProperty(type = STRING)
     private PawColour pawColour;
 }

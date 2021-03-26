@@ -4,34 +4,24 @@ import org.apache.olingo.odata2.annotation.processor.core.ListsProcessor;
 import org.apache.olingo.odata2.annotation.processor.core.datasource.AnnotationValueAccess;
 import org.apache.olingo.odata2.annotation.processor.core.datasource.DataSource;
 import org.apache.olingo.odata2.annotation.processor.core.datasource.ValueAccess;
-import org.apache.olingo.odata2.api.processor.ODataSingleProcessor;
-import org.apache.olingo.odata2.jpa.processor.api.ODataJPAContext;
-import org.apache.olingo.odata2.jpa.processor.api.ODataJPAServiceFactory;
-import org.apache.olingo.odata2.jpa.processor.api.exception.ODataJPARuntimeException;
+import org.apache.olingo.odata2.annotation.processor.core.edm.AnnotationEdmProvider;
+import org.apache.olingo.odata2.api.ODataService;
+import org.apache.olingo.odata2.api.ODataServiceFactory;
+import org.apache.olingo.odata2.api.edm.provider.EdmProvider;
+import org.apache.olingo.odata2.api.exception.ODataException;
+import org.apache.olingo.odata2.api.processor.ODataContext;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManagerFactory;
-
-import static javax.persistence.Persistence.createEntityManagerFactory;
-
 @Component
-public class ODataJPAFactoryImplApp extends ODataJPAServiceFactory {
+public class ODataJPAFactoryImplApp extends ODataServiceFactory {
 
-    private static final String PERSISTENCE_UNIT_NAME = "odataJPAPersistence";
-
-    @Override
-    public ODataJPAContext initializeODataJPAContext() throws ODataJPARuntimeException {
-        ODataJPAContext oDatJPAContext = this.getODataJPAContext();
-        EntityManagerFactory emf = createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        oDatJPAContext.setEntityManagerFactory(emf);
-        oDatJPAContext.setPersistenceUnitName(PERSISTENCE_UNIT_NAME);
-        return oDatJPAContext;
-    }
+    private static final String MODEL_PACKAGE = "com.leverx.app.config.odata.edm";
 
     @Override
-    public ODataSingleProcessor createCustomODataProcessor(ODataJPAContext oDataJPAContext) {
+    public ODataService createService(ODataContext ctx) throws ODataException {
+        EdmProvider edmProvider = new AnnotationEdmProvider(MODEL_PACKAGE);
         ValueAccess valueAccess = new AnnotationValueAccess();
         DataSource dataSource = new AppDataSource();
-        return new ListsProcessor(dataSource, valueAccess);
+        return createODataSingleProcessorService(edmProvider, new ListsProcessor(dataSource, valueAccess));
     }
 }
