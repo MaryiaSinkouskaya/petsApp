@@ -1,7 +1,5 @@
 package com.leverx.app.config.odata;
 
-import com.leverx.app.config.odata.edm.PetEdm;
-import com.leverx.app.config.odata.edm.mapper.EdmMapper;
 import com.leverx.app.entity.cat.Cat;
 import com.leverx.app.entity.dog.Dog;
 import com.leverx.app.entity.pet.Pet;
@@ -21,7 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 import static com.leverx.app.config.odata.AppContext.getApplicationContext;
-import static com.leverx.app.config.odata.edm.mapper.EdmMapper.*;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.convertCat;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.convertCats;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.convertDog;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.convertDogs;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.convertPet;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.convertPets;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.convertUser;
+import static com.leverx.app.config.odata.edm.mapper.EdmMapper.convertUsers;
 import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_CATS;
 import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_DOGS;
 import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_PETS;
@@ -80,12 +85,15 @@ public class AppDataSource implements DataSource {
     @Override
     public Object readData(EdmFunctionImport function,
                            Map<String, Object> parameters,
-                           Map<String, Object> keys) {
-        return null;
+                           Map<String, Object> keys) throws ODataNotImplementedException {
+        throw new ODataNotImplementedException();
     }
 
     @Override
-    public Object readRelatedData(EdmEntitySet sourceEntitySet, Object sourceData, EdmEntitySet targetEntitySet, Map<String, Object> targetKeys) throws EdmException {
+    public Object readRelatedData(EdmEntitySet sourceEntitySet,
+                                  Object sourceData,
+                                  EdmEntitySet targetEntitySet,
+                                  Map<String, Object> targetKeys) throws EdmException {
         String sourceEntityName = sourceEntitySet.getName();
         String targetEntityName = targetEntitySet.getName();
         switch (sourceEntityName) {
@@ -110,7 +118,7 @@ public class AppDataSource implements DataSource {
                     return convertUser(dog.getUser());
                 }
         }
-        return null;
+        throw new EdmException(ENTITY);
     }
 
     @Override

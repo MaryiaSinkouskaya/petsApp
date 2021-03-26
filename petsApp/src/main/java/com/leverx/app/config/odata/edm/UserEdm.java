@@ -1,6 +1,7 @@
 package com.leverx.app.config.odata.edm;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ import static org.apache.olingo.odata2.api.annotation.edm.EdmType.STRING;
 
 @Getter
 @Setter
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @EdmEntitySet(name = ENTITY_SET_NAME_USERS, container = ENTITY_CONTAINER)

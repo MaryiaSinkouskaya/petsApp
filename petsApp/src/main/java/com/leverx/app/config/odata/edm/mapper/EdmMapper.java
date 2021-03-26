@@ -19,16 +19,15 @@ import static lombok.AccessLevel.PRIVATE;
 public class EdmMapper {
 
     public static CatEdm convertCat(Cat cat) {
-        return new CatEdm(cat.getId(),cat.getName(), cat.isClippedClaws());
+        return new CatEdm(cat.getId(), cat.getName(), convertUser(cat.getUser()), cat.isClippedClaws());
     }
 
     public static DogEdm convertDog(Dog dog) {
-        return new DogEdm(dog.getId(), dog.getName(),dog.getPawColour());
+        return new DogEdm(dog.getId(), dog.getName(), convertUser(dog.getUser()), dog.getPawColour());
     }
 
     public static UserEdm convertUser(User user) {
-        List<PetEdm> petEdms = convertPets(user.getPets());
-        return new UserEdm(user.getId(), user.getName(), user.getPassword(), petEdms);
+        return new UserEdm(user.getId(), user.getName(), user.getPassword(), convertPets(user.getPets()));
     }
 
     public static PetEdm convertPet(Pet pet) {
