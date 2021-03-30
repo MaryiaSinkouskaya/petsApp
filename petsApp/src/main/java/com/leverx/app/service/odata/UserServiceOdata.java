@@ -14,5 +14,5 @@ public interface UserServiceOdata extends OdataCommonService<UserEdm, List<PetEd
 
     List<UserEdm> findAll();
 
-    List<PetEdm> readRelatedData(Object sourceData, String targetEntityName)throws EdmException;
+    List<PetEdm> readRelatedData(Object sourceData, String targetEntityName) throws EdmException;
 }

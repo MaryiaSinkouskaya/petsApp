@@ -14,5 +14,5 @@ public interface CatServiceOdata extends OdataCommonService<CatEdm, UserEdm> {
 
     List<CatEdm> findAll();
 
-    UserEdm readRelatedData(Object sourceData, String targetEntityName)throws EdmException;
+    UserEdm readRelatedData(Object sourceData, String targetEntityName) throws EdmException;
 }

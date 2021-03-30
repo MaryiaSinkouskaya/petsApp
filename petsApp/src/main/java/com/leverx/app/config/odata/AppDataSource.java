@@ -1,9 +1,5 @@
 package com.leverx.app.config.odata;
 
-import com.leverx.app.config.odata.edm.CatEdm;
-import com.leverx.app.config.odata.edm.DogEdm;
-import com.leverx.app.config.odata.edm.PetEdm;
-import com.leverx.app.config.odata.edm.UserEdm;
 import com.leverx.app.service.odata.CatServiceOdata;
 import com.leverx.app.service.odata.DogServiceOdata;
 import com.leverx.app.service.odata.OdataCommonService;
