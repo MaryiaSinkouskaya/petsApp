@@ -76,27 +76,10 @@ public class AppDataSource implements DataSource {
                                   Map<String, Object> targetKeys) throws EdmException {
         String sourceEntityName = sourceEntitySet.getName();
         String targetEntityName = targetEntitySet.getName();
-        switch (sourceEntityName) {
-            case ENTITY_SET_NAME_USERS:
-                UserEdm user = (UserEdm) sourceData;
-                if (ENTITY_SET_NAME_PETS.equals(targetEntityName)) {
-                    return user.getPets();
-                }
-            case ENTITY_SET_NAME_PETS:
-                PetEdm pet = (PetEdm) sourceData;
-                if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return pet.getUser();
-                }
-            case ENTITY_SET_NAME_CATS:
-                CatEdm cat = (CatEdm) sourceData;
-                if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return cat.getUser();
-                }
-            case ENTITY_SET_NAME_DOGS:
-                DogEdm dog = (DogEdm) sourceData;
-                if (ENTITY_SET_NAME_USERS.equals(targetEntityName)) {
-                    return dog.getUser();
-                }
+
+        if (map.containsKey(sourceEntityName)) {
+            return map.get(sourceEntityName)
+                    .readRelatedData(sourceData, targetEntityName);
         }
         throw new EdmException(ENTITY);
     }
