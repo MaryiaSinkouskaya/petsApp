@@ -1,6 +1,6 @@
 package com.leverx.app.config.security;
 
-import com.leverx.app.service.impl.UserCredentialsServiceImpl;
+import com.leverx.app.service.jpa.impl.UserCredentialsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

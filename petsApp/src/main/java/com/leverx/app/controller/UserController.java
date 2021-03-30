@@ -1,7 +1,7 @@
 package com.leverx.app.controller;
 
 import com.leverx.app.entity.user.User;
-import com.leverx.app.service.UserService;
+import com.leverx.app.service.jpa.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

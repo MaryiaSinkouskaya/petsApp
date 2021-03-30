@@ -1,4 +1,4 @@
-package com.leverx.app.service.impl;
+package com.leverx.app.service.jpa.impl;
 
 import com.leverx.app.entity.user.User;
 import com.leverx.app.repository.UserRepository;

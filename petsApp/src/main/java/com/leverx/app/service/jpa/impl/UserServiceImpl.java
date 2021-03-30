@@ -1,10 +1,10 @@
-package com.leverx.app.service.impl;
+package com.leverx.app.service.jpa.impl;
 
 import com.leverx.app.entity.pet.Pet;
 import com.leverx.app.entity.user.User;
 import com.leverx.app.repository.PetRepository;
 import com.leverx.app.repository.UserRepository;
-import com.leverx.app.service.UserService;
+import com.leverx.app.service.jpa.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
