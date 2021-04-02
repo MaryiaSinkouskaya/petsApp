@@ -2,10 +2,12 @@ package com.leverx.app.entity.dog;
 
 import com.leverx.app.entity.dog.enums.PawColour;
 import com.leverx.app.entity.pet.Pet;
+import com.leverx.app.entity.user.User;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "dog")
 public class Dog extends Pet {
 
@@ -26,4 +28,11 @@ public class Dog extends Pet {
 
     @Column(name = "paw_colour")
     private PawColour pawColour;
+
+    @Builder(builderMethodName = "dogBuilder")
+    public Dog(long id, PawColour pawColour, String name, User user) {
+        super(id, name, user);
+        this.pawColour = pawColour;
+    }
+
 }

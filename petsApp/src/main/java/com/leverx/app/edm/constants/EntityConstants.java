@@ -1,4 +1,4 @@
-package com.leverx.app.entity.constants;
+package com.leverx.app.edm.constants;
 
 public class EntityConstants {
 

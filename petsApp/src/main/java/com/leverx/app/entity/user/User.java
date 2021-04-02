@@ -3,9 +3,9 @@ package com.leverx.app.entity.user;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.leverx.app.entity.pet.Pet;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,10 +20,10 @@ import java.util.List;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class User {
 

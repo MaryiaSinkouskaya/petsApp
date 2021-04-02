@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.Map;
 
 import static com.leverx.app.config.odata.AppContext.getApplicationContext;
-import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_CATS;
-import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_DOGS;
-import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_PETS;
-import static com.leverx.app.entity.constants.EntityConstants.ENTITY_SET_NAME_USERS;
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_CATS;
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_DOGS;
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_PETS;
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_USERS;
 import static org.apache.olingo.odata2.api.exception.ODataNotFoundException.ENTITY;
 
 public class AppDataSource implements DataSource {
@@ -55,7 +55,6 @@ public class AppDataSource implements DataSource {
             return map.get(entitySetName).find(firstLayerEntityId);
         }
         throw new ODataNotFoundException(ENTITY);
-
     }
 
     @Override
@@ -72,7 +71,6 @@ public class AppDataSource implements DataSource {
                                   Map<String, Object> targetKeys) throws EdmException {
         String sourceEntityName = sourceEntitySet.getName();
         String targetEntityName = targetEntitySet.getName();
-
         if (map.containsKey(sourceEntityName)) {
             return map.get(sourceEntityName)
                     .readRelatedData(sourceData, targetEntityName);
@@ -86,8 +84,12 @@ public class AppDataSource implements DataSource {
     }
 
     @Override
-    public Object newDataObject(EdmEntitySet entitySet) throws ODataNotImplementedException {
-        throw new ODataNotImplementedException();
+    public Object newDataObject(EdmEntitySet entitySet) throws EdmException, ODataNotImplementedException {
+        String entitySetName = entitySet.getName();
+        if (map.containsKey(entitySetName)) {
+            return map.get(entitySetName).getNewEdm();
+        }
+        throw new EdmException(ENTITY);
     }
 
     @Override
@@ -96,13 +98,23 @@ public class AppDataSource implements DataSource {
     }
 
     @Override
-    public void deleteData(EdmEntitySet entitySet, Map<String, Object> keys) throws ODataNotImplementedException {
-        throw new ODataNotImplementedException();
+    public void deleteData(EdmEntitySet entitySet, Map<String, Object> keys) throws EdmException, ODataNotImplementedException {
+        String entitySetName = entitySet.getName();
+        Long firstLayerEntityId = (Long) keys.get("Id");
+        if (map.containsKey(entitySetName)) {
+            map.get(entitySetName).delete(firstLayerEntityId);
+        }
+        throw new EdmException(ENTITY);
     }
 
     @Override
-    public void createData(EdmEntitySet entitySet, Object data) throws ODataNotImplementedException {
-        throw new ODataNotImplementedException();
+    public void createData(EdmEntitySet entitySet, Object data) throws EdmException, ODataNotImplementedException {
+        String entitySetName = entitySet.getName();
+        if (map.containsKey(entitySetName)) {
+            map.get(entitySetName).save(data);
+        } else {
+            throw new EdmException(ENTITY);
+        }
     }
 
     @Override
