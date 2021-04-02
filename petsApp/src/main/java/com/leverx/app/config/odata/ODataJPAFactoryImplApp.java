@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ODataJPAFactoryImplApp extends ODataServiceFactory {
 
-    private static final String MODEL_PACKAGE = "com.leverx.app.config.odata.edm";
+    private static final String MODEL_PACKAGE = "com.leverx.app.edm";
 
     @Override
     public ODataService createService(ODataContext ctx) throws ODataException {
