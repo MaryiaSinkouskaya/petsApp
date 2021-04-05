@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_USERS;
 import static com.leverx.app.edm.mapper.EdmMapper.convertCat;
 import static com.leverx.app.edm.mapper.EdmMapper.convertCats;
-import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_USERS;
 import static org.apache.olingo.odata2.api.exception.ODataNotFoundException.ENTITY;
 
 @RequiredArgsConstructor
@@ -21,7 +21,6 @@ import static org.apache.olingo.odata2.api.exception.ODataNotFoundException.ENTI
 public class CatServiceOdataImpl implements CatServiceOdata {
 
     private final CatService catService;
-
 
     @Override
     public CatEdm find(long id) {
@@ -43,8 +42,7 @@ public class CatServiceOdataImpl implements CatServiceOdata {
     }
 
     @Override
-    public Cat save(Object data) {
-        CatEdm catEdm = (CatEdm) data;
+    public Cat save(CatEdm catEdm) {
         Cat cat = convertCat(catEdm);
         return catService.create(cat);
     }

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_PETS;
 import static com.leverx.app.edm.mapper.EdmMapper.convertUser;
 import static com.leverx.app.edm.mapper.EdmMapper.convertUsers;
-import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_PETS;
 import static org.apache.olingo.odata2.api.exception.ODataNotFoundException.ENTITY;
 
 @RequiredArgsConstructor
@@ -42,8 +42,7 @@ public class UserServiceOdataImpl implements UserServiceOdata {
     }
 
     @Override
-    public User save(Object data) {
-        UserEdm userEdm = (UserEdm) data;
+    public User save(UserEdm userEdm) {
         User user = convertUser(userEdm);
         return userService.create(user);
     }

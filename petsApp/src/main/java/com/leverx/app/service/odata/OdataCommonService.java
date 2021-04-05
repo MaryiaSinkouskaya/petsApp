@@ -13,7 +13,7 @@ public interface OdataCommonService<T, P, R> {
 
     P readRelatedData(Object sourceData, String targetEntityName) throws EdmException;
 
-    R save(Object data) throws ODataNotImplementedException;
+    R save(T data) throws ODataNotImplementedException;
 
     void delete(long id) throws ODataNotImplementedException;
 

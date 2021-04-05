@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_USERS;
 import static com.leverx.app.edm.mapper.EdmMapper.convertPet;
 import static com.leverx.app.edm.mapper.EdmMapper.convertPets;
-import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_USERS;
 import static org.apache.olingo.odata2.api.exception.ODataNotFoundException.ENTITY;
 
 @RequiredArgsConstructor
@@ -43,7 +43,7 @@ public class PetServiceOdataImpl implements PetServiceOdata {
     }
 
     @Override
-    public Pet save(Object data) throws ODataNotImplementedException {
+    public Pet save(PetEdm data) throws ODataNotImplementedException {
         throw new ODataNotImplementedException();
     }
 
