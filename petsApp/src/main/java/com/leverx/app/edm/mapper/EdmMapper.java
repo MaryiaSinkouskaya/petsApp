@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.leverx.app.entity.dog.enums.PawColour.BLACK;
-import static com.leverx.app.entity.dog.enums.PawColour.PINK;
-import static java.util.Collections.emptyList;
+import static com.leverx.app.entity.dog.enums.PawColour.valueOf;
 import static java.util.Objects.isNull;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -25,101 +23,117 @@ public class EdmMapper {
 
     public static CatEdm convertCat(Cat cat) {
         if (isNull(cat)) {
-            return null;
+            throw new NullPointerException();
         }
+        User user = cat.getUser();
+        long id = isNull(user) ? 0L : user.getId();
         return CatEdm.catEdmBuilder()
                 .id(cat.getId())
                 .clippedClaws(cat.isClippedClaws())
                 .name(cat.getName())
-                .userId(cat.getUser().getId())
+                .userId(id)
                 .build();
     }
 
     public static Cat convertCat(CatEdm cat) {
         if (isNull(cat)) {
-            return null;
+            throw new NullPointerException();
         }
+        if (isNull(cat.getUserId())) {
+            return Cat.catBuilder()
+                    .id(cat.getId())
+                    .clippedClaws(cat.getClippedClaws())
+                    .name(cat.getName())
+                    .build();
+        }
+        User user = User.builder()
+                .id(cat.getUserId())
+                .build();
         return Cat.catBuilder()
                 .id(cat.getId())
                 .clippedClaws(cat.getClippedClaws())
                 .name(cat.getName())
-                .user(User.builder()
-                        .id(cat.getUserId())
-                        .build())
+                .user(user)
                 .build();
     }
 
     public static DogEdm convertDog(Dog dog) {
         if (isNull(dog)) {
-            return null;
+            throw new NullPointerException();
         }
-        if (isNull(dog.getUser())) {
-            return DogEdm.dogEdmBuilder()
-                    .id(dog.getId())
-                    .name(dog.getName())
-                    .pawColour(dog.getPawColour().getColour())
-                    .build();
-        }
+        String pawColour = dog.getPawColour().name();
+        User user = dog.getUser();
+        long id = isNull(user) ? 0L : user.getId();
         return DogEdm.dogEdmBuilder()
                 .id(dog.getId())
                 .name(dog.getName())
-                .pawColour(dog.getPawColour().getColour())
-                .userId(dog.getUser().getId())
+                .pawColour(pawColour)
+                .userId(id)
                 .build();
     }
 
     public static Dog convertDog(DogEdm dog) {
         if (isNull(dog)) {
-            return null;
+            throw new NullPointerException();
         }
-        PawColour pawColour = PINK;
-        if (dog.getPawColour().equals(BLACK.getColour())) {
-            pawColour = BLACK;
+        PawColour pawColour = valueOf(dog.getPawColour());
+        if (isNull(dog.getUserId())) {
+            return Dog.dogBuilder()
+                    .pawColour(pawColour)
+                    .name(dog.getName())
+                    .build();
         }
+        User user = User.builder()
+                .id(dog.getUserId())
+                .build();
         return Dog.dogBuilder()
                 .pawColour(pawColour)
                 .name(dog.getName())
-                .user(User.builder()
-                        .id(dog.getUserId())
-                        .build())
+                .user(user)
                 .build();
     }
 
     public static UserEdm convertUser(User user) {
         if (isNull(user)) {
-            return null;
+            throw new NullPointerException();
         }
-        List<Pet> pets = user.getPets();
-        if (isNull(pets)) {
-            pets = emptyList();
+        if (isNull(user.getPets())) {
+            return UserEdm.builder()
+                    .id(user.getId())
+                    .name(user.getName())
+                    .password(user.getPassword())
+                    .build();
         }
         return UserEdm.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .password(user.getPassword())
-                .pets(convertPets(pets))
+                .pets(convertPets(user.getPets()))
                 .build();
     }
 
     public static User convertUser(UserEdm user) {
         if (isNull(user)) {
-            return null;
+            throw new NullPointerException();
         }
-        List<PetEdm> pets = user.getPets();
-        if (isNull(pets)) {
-            pets = emptyList();
+        if (isNull(user.getPets())) {
+            return User.builder()
+                    .id(user.getId())
+                    .name(user.getName())
+                    .password(user.getPassword())
+                    .build();
         }
         return User.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .password(user.getPassword())
-                .pets(convertPetsEdm(pets))
+                .pets(convertPetsEdm(user.getPets()))
                 .build();
     }
 
     public static PetEdm convertPet(Pet pet) {
         if (isNull(pet)) {
-            return null;
+            throw new NullPointerException();
         }
         return PetEdm.builder()
                 .id(pet.getId())
@@ -129,7 +143,7 @@ public class EdmMapper {
 
     public static Pet convertPet(PetEdm pet) {
         if (isNull(pet)) {
-            return null;
+            throw new NullPointerException();
         }
         return Pet.builder()
                 .id(pet.getId())
@@ -138,8 +152,6 @@ public class EdmMapper {
     }
 
     public static List<PetEdm> convertPets(List<Pet> pets) {
-        if (pets.isEmpty())
-            return emptyList();
         return pets
                 .stream()
                 .map(EdmMapper::convertPet)
@@ -147,8 +159,6 @@ public class EdmMapper {
     }
 
     public static List<Pet> convertPetsEdm(List<PetEdm> pets) {
-        if (pets.isEmpty())
-            return emptyList();
         return pets
                 .stream()
                 .map(EdmMapper::convertPet)
@@ -156,8 +166,6 @@ public class EdmMapper {
     }
 
     public static List<CatEdm> convertCats(List<Cat> cats) {
-        if (cats.isEmpty())
-            return emptyList();
         return cats
                 .stream()
                 .map(EdmMapper::convertCat)
@@ -165,8 +173,6 @@ public class EdmMapper {
     }
 
     public static List<DogEdm> convertDogs(List<Dog> dogs) {
-        if (dogs.isEmpty())
-            return emptyList();
         return dogs
                 .stream()
                 .map(EdmMapper::convertDog)
@@ -174,8 +180,6 @@ public class EdmMapper {
     }
 
     public static List<UserEdm> convertUsers(List<User> users) {
-        if (users.isEmpty())
-            return emptyList();
         return users
                 .stream()
                 .map(EdmMapper::convertUser)
