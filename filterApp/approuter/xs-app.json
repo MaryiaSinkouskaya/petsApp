@@ -1,0 +1,8 @@
+{
+  "welcomeFile": "/api/all",
+  "routes": [{
+    "source": "/",
+    "target": "/",
+    "destination": "petsDestinationService"
+  }]
+}

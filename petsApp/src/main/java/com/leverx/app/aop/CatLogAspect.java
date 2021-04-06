@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Log4j2
 public class CatLogAspect {
 
-    @Pointcut("execution(public * com.leverx.app.service.impl.CatServiceImpl.*(..))")
+    @Pointcut("execution(public * com.leverx.app.service.jpa.impl.CatServiceImpl.*(..))")
     public void catServiceExec() {
     }
 

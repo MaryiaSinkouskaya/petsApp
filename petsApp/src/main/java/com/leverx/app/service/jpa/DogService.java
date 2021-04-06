@@ -1,4 +1,4 @@
-package com.leverx.app.service;
+package com.leverx.app.service.jpa;
 
 import com.leverx.app.entity.dog.Dog;
 import org.springframework.stereotype.Service;

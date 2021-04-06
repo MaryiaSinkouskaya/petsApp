@@ -1,10 +1,26 @@
 applications:
   #Application
-- name: filterApp
-  instances: 1
-  memory: 1G
-  disk_quota: 1G
-  path: target/filterApp-1.0-SNAPSHOT.jar
-  buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.17.1
-  services:
-  - petsDestinationService
+  - name: filterApp
+    instances: 1
+    memory: 1G
+    disk_quota: 1G
+    path: target/filterApp-1.0-SNAPSHOT.jar
+    buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.17.1
+    env:
+      JBP_CONFIG_DEBUG: '{enabled: true}'
+    services:
+      - petsDestinationService
+      - my-xsuaa
+
+  - name: approuter
+    routes:
+      - route: approuter-bcb80019trial.cfapps.eu10.hana.ondemand.com
+    path: approuter
+    memory: 128M
+    buildpacks:
+      - nodejs_buildpack
+    env:
+      TENANT_HOST_PATTERN: 'approuter-(.*).cfapps.eu10.hana.ondemand.com'
+      destinations: '[{"name":"petsDestinationService", "url" :"https://filterApp.cfapps.eu10.hana.ondemand.com", "forwardAuthToken": true}]'
+    services:
+      - my-xsuaa

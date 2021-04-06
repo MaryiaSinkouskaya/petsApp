@@ -1,0 +1,129 @@
+package com.leverx.app.config.odata;
+
+import com.leverx.app.service.odata.CatServiceOdata;
+import com.leverx.app.service.odata.DogServiceOdata;
+import com.leverx.app.service.odata.OdataCommonService;
+import com.leverx.app.service.odata.PetServiceOdata;
+import com.leverx.app.service.odata.UserServiceOdata;
+import org.apache.olingo.odata2.annotation.processor.core.datasource.DataSource;
+import org.apache.olingo.odata2.api.edm.EdmEntitySet;
+import org.apache.olingo.odata2.api.edm.EdmException;
+import org.apache.olingo.odata2.api.edm.EdmFunctionImport;
+import org.apache.olingo.odata2.api.exception.ODataNotFoundException;
+import org.apache.olingo.odata2.api.exception.ODataNotImplementedException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.leverx.app.config.odata.AppContext.getApplicationContext;
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_CATS;
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_DOGS;
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_PETS;
+import static com.leverx.app.edm.constants.EntityConstants.ENTITY_SET_NAME_USERS;
+import static org.apache.olingo.odata2.api.exception.ODataNotFoundException.ENTITY;
+
+public class AppDataSource implements DataSource {
+
+    private final Map<String, OdataCommonService> map = new HashMap<>();
+
+    public AppDataSource() {
+        PetServiceOdata petService = getApplicationContext().getBean(PetServiceOdata.class);
+        UserServiceOdata userService = getApplicationContext().getBean(UserServiceOdata.class);
+        CatServiceOdata catService = getApplicationContext().getBean(CatServiceOdata.class);
+        DogServiceOdata dogService = getApplicationContext().getBean(DogServiceOdata.class);
+        map.put(ENTITY_SET_NAME_PETS, petService);
+        map.put(ENTITY_SET_NAME_USERS, userService);
+        map.put(ENTITY_SET_NAME_CATS, catService);
+        map.put(ENTITY_SET_NAME_DOGS, dogService);
+    }
+
+    @Override
+    public List<?> readData(EdmEntitySet entitySet) throws ODataNotFoundException, EdmException {
+        String entitySetName = entitySet.getName();
+        if (map.containsKey(entitySetName)) {
+            return map.get(entitySetName).findAll();
+        }
+        throw new ODataNotFoundException(ENTITY);
+    }
+
+    @Override
+    public Object readData(EdmEntitySet entitySet, Map<String, Object> keys) throws ODataNotFoundException, EdmException {
+        String entitySetName = entitySet.getName();
+        Long firstLayerEntityId = (Long) keys.get("Id");
+        if (map.containsKey(entitySetName)) {
+            return map.get(entitySetName).find(firstLayerEntityId);
+        }
+        throw new ODataNotFoundException(ENTITY);
+    }
+
+    @Override
+    public Object readData(EdmFunctionImport function,
+                           Map<String, Object> parameters,
+                           Map<String, Object> keys) throws ODataNotImplementedException {
+        throw new ODataNotImplementedException();
+    }
+
+    @Override
+    public Object readRelatedData(EdmEntitySet sourceEntitySet,
+                                  Object sourceData,
+                                  EdmEntitySet targetEntitySet,
+                                  Map<String, Object> targetKeys) throws EdmException {
+        String sourceEntityName = sourceEntitySet.getName();
+        String targetEntityName = targetEntitySet.getName();
+        if (map.containsKey(sourceEntityName)) {
+            return map.get(sourceEntityName)
+                    .readRelatedData(sourceData, targetEntityName);
+        }
+        throw new EdmException(ENTITY);
+    }
+
+    @Override
+    public BinaryData readBinaryData(EdmEntitySet entitySet, Object mediaLinkEntryData) throws ODataNotImplementedException {
+        throw new ODataNotImplementedException();
+    }
+
+    @Override
+    public Object newDataObject(EdmEntitySet entitySet) throws EdmException, ODataNotImplementedException {
+        String entitySetName = entitySet.getName();
+        if (map.containsKey(entitySetName)) {
+            return map.get(entitySetName).getNewEdm();
+        }
+        throw new EdmException(ENTITY);
+    }
+
+    @Override
+    public void writeBinaryData(EdmEntitySet entitySet, Object mediaLinkEntryData, BinaryData binaryData) throws ODataNotImplementedException {
+        throw new ODataNotImplementedException();
+    }
+
+    @Override
+    public void deleteData(EdmEntitySet entitySet, Map<String, Object> keys) throws EdmException, ODataNotImplementedException {
+        String entitySetName = entitySet.getName();
+        Long firstLayerEntityId = (Long) keys.get("Id");
+        if (map.containsKey(entitySetName)) {
+            map.get(entitySetName).delete(firstLayerEntityId);
+        }
+        throw new EdmException(ENTITY);
+    }
+
+    @Override
+    public void createData(EdmEntitySet entitySet, Object data) throws EdmException, ODataNotImplementedException {
+        String entitySetName = entitySet.getName();
+        if (map.containsKey(entitySetName)) {
+            map.get(entitySetName).save(data);
+        } else {
+            throw new EdmException(ENTITY);
+        }
+    }
+
+    @Override
+    public void deleteRelation(EdmEntitySet sourceEntitySet, Object sourceData, EdmEntitySet targetEntitySet, Map<String, Object> targetKeys) throws ODataNotImplementedException {
+        throw new ODataNotImplementedException();
+    }
+
+    @Override
+    public void writeRelation(EdmEntitySet sourceEntitySet, Object sourceData, EdmEntitySet targetEntitySet, Map<String, Object> targetKeys) throws ODataNotImplementedException {
+        throw new ODataNotImplementedException();
+    }
+}

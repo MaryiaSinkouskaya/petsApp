@@ -1,7 +1,7 @@
 package com.leverx.app.controller;
 
 import com.leverx.app.entity.cat.Cat;
-import com.leverx.app.service.CatService;
+import com.leverx.app.service.jpa.CatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

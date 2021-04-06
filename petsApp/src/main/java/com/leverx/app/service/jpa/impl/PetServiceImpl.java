@@ -1,8 +1,8 @@
-package com.leverx.app.service.impl;
+package com.leverx.app.service.jpa.impl;
 
 import com.leverx.app.entity.pet.Pet;
 import com.leverx.app.repository.PetRepository;
-import com.leverx.app.service.PetService;
+import com.leverx.app.service.jpa.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

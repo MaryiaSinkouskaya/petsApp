@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Log4j2
 public class PetLogAspect {
 
-    @Pointcut("execution(public * com.leverx.app.service.impl.PetServiceImpl.*(..))")
+    @Pointcut("execution(public * com.leverx.app.service.jpa.impl.PetServiceImpl.*(..))")
     public void petServiceExec() {
     }
 

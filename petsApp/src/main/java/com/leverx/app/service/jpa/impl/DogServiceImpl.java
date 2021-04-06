@@ -1,11 +1,10 @@
-package com.leverx.app.service.impl;
+package com.leverx.app.service.jpa.impl;
 
 import com.leverx.app.entity.dog.Dog;
 import com.leverx.app.repository.DogRepository;
-import com.leverx.app.service.DogService;
+import com.leverx.app.service.jpa.DogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

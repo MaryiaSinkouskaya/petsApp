@@ -1,7 +1,7 @@
 package com.leverx.app.controller;
 
 import com.leverx.app.entity.pet.Pet;
-import com.leverx.app.service.PetService;
+import com.leverx.app.service.jpa.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
