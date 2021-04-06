@@ -23,7 +23,7 @@ public class EdmMapper {
 
     public static CatEdm convertCat(Cat cat) {
         if (isNull(cat)) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Cat entity is null");
         }
         User user = cat.getUser();
         long id = isNull(user) ? 0L : user.getId();
@@ -37,7 +37,7 @@ public class EdmMapper {
 
     public static Cat convertCat(CatEdm cat) {
         if (isNull(cat)) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Cat EDM is null");
         }
         if (isNull(cat.getUserId())) {
             return Cat.catBuilder()
@@ -59,7 +59,7 @@ public class EdmMapper {
 
     public static DogEdm convertDog(Dog dog) {
         if (isNull(dog)) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Dog entity is null");
         }
         String pawColour = dog.getPawColour().name();
         User user = dog.getUser();
@@ -74,7 +74,7 @@ public class EdmMapper {
 
     public static Dog convertDog(DogEdm dog) {
         if (isNull(dog)) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Dog EDM is null");
         }
         PawColour pawColour = valueOf(dog.getPawColour());
         if (isNull(dog.getUserId())) {
@@ -95,7 +95,7 @@ public class EdmMapper {
 
     public static UserEdm convertUser(User user) {
         if (isNull(user)) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("User entity is null");
         }
         if (isNull(user.getPets())) {
             return UserEdm.builder()
@@ -114,7 +114,7 @@ public class EdmMapper {
 
     public static User convertUser(UserEdm user) {
         if (isNull(user)) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("User EDM is null");
         }
         if (isNull(user.getPets())) {
             return User.builder()
@@ -133,7 +133,7 @@ public class EdmMapper {
 
     public static PetEdm convertPet(Pet pet) {
         if (isNull(pet)) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Pet entity is null");
         }
         return PetEdm.builder()
                 .id(pet.getId())
@@ -143,7 +143,7 @@ public class EdmMapper {
 
     public static Pet convertPet(PetEdm pet) {
         if (isNull(pet)) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("Pet EDM is null");
         }
         return Pet.builder()
                 .id(pet.getId())
